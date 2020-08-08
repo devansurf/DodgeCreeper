@@ -1,0 +1,10 @@
+name: DodgeCreeper
+version: 1.0.0
+author: DevsDevelop
+main: me.devsdevelop.DodgeCreeper
+description: dodge the creeper!
+api-version: 1.13
+
+commands:
+  dc:
+    description: Starts the gamemode.
