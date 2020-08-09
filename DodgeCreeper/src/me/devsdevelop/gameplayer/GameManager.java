@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,8 +38,9 @@ public class GameManager {
 			createArena(player);
 		}
 		gameStarted = true;
-		teleportGamePlayers();
+		setupGamePlayers();
 		giveGamePlayerItems();
+		
 		plugin.getEggsScheduler().initializeSchedulers();
 		// give player armor, items, spawn points, team, and teleport them.
 	}
@@ -70,8 +72,6 @@ public class GameManager {
 		if (team == null) {
 			return "&cThe specified color does not exist in this context";
 		}
-		player.setHealth(20d);
-		player.setSaturation(0f);
 		gamePlayers.add(new GamePlayer(player,profile,team,plugin));
 		Bukkit.broadcastMessage(Utils.chat("&6" + playerName + " &ahas joined the " + Utils.getTeamColorCode(teamColor) + teamColor + "&a team !"));
 		return "&eSuccessfully added the player " + playerName + " to team " + teamColor;
@@ -112,9 +112,11 @@ public class GameManager {
 	public void givePlayerEggs(int amount, String type) {
 		ItemStack egg = Utils.getEgg(amount, type);
 		for (GamePlayer gp : gamePlayers) {
-			gp.getPlayer().getInventory().addItem(egg);
-			gp.getPlayer().updateInventory();
-			SoundManager.sendSound(gp.getPlayer(), gp.getPlayer().getLocation(), SoundType.POP);
+			if (gp.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+				gp.getPlayer().getInventory().addItem(egg);
+				gp.getPlayer().updateInventory();
+				SoundManager.sendSound(gp.getPlayer(), gp.getPlayer().getLocation(), SoundType.POP);
+			}
 		}
 	}
 	public GamePlayer getGamePlayerFromPlayer(Player player) {
@@ -159,8 +161,13 @@ public class GameManager {
 		return null;
 	}
 	
-    private void teleportGamePlayers() {
+    private void setupGamePlayers() {
     	for (GamePlayer gp : gamePlayers) {
+    		Player player = gp.getPlayer();
+    		player.setHealth(20d);
+    		player.setFoodLevel(20);
+    		player.setSaturation(0f);
+    		player.setGameMode(GameMode.SURVIVAL);
     		gp.teleportGamePlayer();
     	}
     }
@@ -179,8 +186,6 @@ public class GameManager {
     			player.updateInventory();  //update inventory for items to take effect
     		}
     	}
-    
-
     }
 	
 	
