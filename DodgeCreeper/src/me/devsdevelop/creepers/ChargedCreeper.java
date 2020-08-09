@@ -12,8 +12,7 @@ public class ChargedCreeper extends CustomCreeper{
 		super(gamePlayer, loc, ticks, type);
 
 		this.setCustomName(new ChatComponentText(ChatColor.DARK_BLUE + "Charged Creeper"));
-		this.setCustomNameVisible(true);
-		this.setHealth(69);		
+		this.setCustomNameVisible(true);	
 		this.setPowered(true);		
 	}
 	

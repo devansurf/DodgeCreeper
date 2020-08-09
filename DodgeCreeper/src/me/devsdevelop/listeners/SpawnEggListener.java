@@ -1,5 +1,6 @@
 package me.devsdevelop.listeners;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 import org.bukkit.entity.Player;
@@ -34,27 +35,39 @@ public class SpawnEggListener implements Listener{
 	public void onPlaceSpawnEgg(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		GameManager gameManager = plugin.getGameManager();
-		if(event.getAction() == Action.RIGHT_CLICK_BLOCK 
-		&& player.getInventory().getItemInMainHand().getType().equals(Material.CREEPER_SPAWN_EGG)) {
-			if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Charged")) {
-				CustomCreeper creeper = new ChargedCreeper(gameManager.getGamePlayerFromPlayer(player),
-						event.getClickedBlock().getLocation(), plugin.getConfigClass().getChargedCreeperTicks(), "charged");
-				WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
-				world.addEntity(creeper);	
-				gameManager.addCreepers(creeper);
-				player.getInventory().removeItem(removeCharged);
+		
+		if(event.getAction() == Action.RIGHT_CLICK_BLOCK  // if right clicked block
+		&& player.getInventory().getItemInMainHand().getType().equals(Material.CREEPER_SPAWN_EGG)) { // while holding creeper spawn egg
+			if (!gameManager.gameStarted) { // Cancel any creeper spawns if game hasn't started
+				event.setCancelled(true);
+				return;
 			}
-			else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Basic")) {
-				CustomCreeper creeper = new BasicCreeper(gameManager.getGamePlayerFromPlayer(player), 
-						event.getClickedBlock().getLocation(), plugin.getConfigClass().getBasicCreeperTicks(), "basic");
-				WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
-				world.addEntity(creeper);
-				gameManager.addCreepers(creeper);
-				player.getInventory().removeItem(removeBasic);
-			}
-			
+			if (event.getClickedBlock().getType().equals(Material.getMaterial(plugin.getConfigClass().getCreeperSpawnBlock()))) { // and player is looking at the block specified in config 
+				
+				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Charged")) {
+					
+					CustomCreeper creeper = new ChargedCreeper(gameManager.getGamePlayerFromPlayer(player),
+							Utils.getCenterBlock(event.getClickedBlock().getLocation()), plugin.getConfigClass().getChargedCreeperTicks(), "charged");
+					
+					WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
+					world.addEntity(creeper);	
+					gameManager.addCreepers(creeper);
+					player.getInventory().removeItem(removeCharged);
+				}
+				else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Basic")) {
+					
+					CustomCreeper creeper = new BasicCreeper(gameManager.getGamePlayerFromPlayer(player), 			
+							Utils.getCenterBlock(event.getClickedBlock().getLocation()), plugin.getConfigClass().getBasicCreeperTicks(), "basic");
+					
+					WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
+					world.addEntity(creeper);
+					gameManager.addCreepers(creeper);
+					player.getInventory().removeItem(removeBasic);
+				}		
+	        }
 			event.setCancelled(true);
-        }
+		}
+		
 	}
 	
 }

@@ -68,4 +68,5 @@ public class Config {
 	public int getKnockbackStickValue() {return plugin.getConfig().getInt("item.stick.knockback");}
 	public String getKnockbackStickName() {return plugin.getConfig().getString("item.stick.name");}
 	public String getKnockbackStickDescription() {return plugin.getConfig().getString("item.stick.description");}
+	public String getCreeperSpawnBlock() {return plugin.getConfig().getString("block.creeperspawn");}
 }

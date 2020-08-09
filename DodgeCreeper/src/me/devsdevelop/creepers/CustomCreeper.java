@@ -22,6 +22,7 @@ public class CustomCreeper extends EntityCreeper{
 		this.maxFuseTicks = ticks;
 		teamColor = gamePlayer.getPlayerTeam().getTeamColor();
 		this.setPosition(loc.getX(), loc.getY()+1, loc.getZ());		
+		this.setHealth(10000);
 	}
 	
 	public GamePlayer getGamePlayer() {

@@ -18,6 +18,7 @@ public class GameManager {
 	private List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 	private List<CustomCreeper> creepers = new ArrayList<CustomCreeper>();
 	private boolean arenaBuilt = false;
+	public boolean gameStarted = false;
 	
 	public GameManager(DodgeCreeper plugin) {
 		this.plugin = plugin;
@@ -28,17 +29,18 @@ public class GameManager {
 //			player.sendMessage(Utils.chat("&cThere are an insufficient amount of players to start the game, use /dc add <player> to add players"));
 //			return;
 //		}
-		clearGame(); // refresh vars
 		
 		if (!arenaBuilt) {
 			createArena(player);
 		}
+		gameStarted = true;
 		teleportGamePlayers();
 		giveGamePlayerItems();
 		
 		// give player armor, items, spawn points, team, and teleport them.
 	}
 	public void clearGame() {
+		gameStarted = false;
 		gamePlayers.clear();
 		creepers.clear();
 		for (PlayerTeam playerTeam : playerTeams) {

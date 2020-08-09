@@ -30,3 +30,5 @@ item:
     knockback: 13
     name: Knockback Stick
     description: A stick made for whacking creepers
+block:
+  creeperspawn: BEDROCK

@@ -14,7 +14,6 @@ public class BasicCreeper extends CustomCreeper{
 		
 		this.setCustomName(new ChatComponentText(ChatColor.GREEN + "Basic Creeper"));
 		this.setCustomNameVisible(true);
-		this.setHealth(69);
 		
 		this.goalSelector.a(0, new PathfinderGoalRandomStroll(this, 0D));
 																			

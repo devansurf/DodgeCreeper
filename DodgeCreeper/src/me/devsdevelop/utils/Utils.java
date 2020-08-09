@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -65,6 +66,12 @@ public class Utils {
 		return null;
 		
 		
+	}
+	public static Location getCenterBlock(Location loc) {
+		Location location = loc;
+		location.setX(loc.getX()+0.5D);
+		location.setZ(loc.getZ()+0.5D);
+		return location;
 	}
 	public static String getTeamColorCode(String teamColor) {
 		String cc = "";

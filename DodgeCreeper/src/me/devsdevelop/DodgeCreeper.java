@@ -27,12 +27,14 @@ public class DodgeCreeper extends JavaPlugin{
 		EnableCommands();
 		
 	}
+
 	private void RegisterEvents() {
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new PressurePlateListener(this), this);
 		pm.registerEvents(new SpawnEggListener(this), this);
-        pm.registerEvents(new CreeperTargetListener(this), this);
-        pm.registerEvents(new OnHitCreeperListener(this), this);
+		pm.registerEvents(new CreeperTargetListener(this), this);
+		pm.registerEvents(new OnHitCreeperListener(this), this);
+		
 	}
 	
 	private void EnableCommands() {

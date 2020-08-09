@@ -1,6 +1,5 @@
 package me.devsdevelop.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +27,10 @@ public class CreeperTargetListener implements Listener{
 					
 				if (creeper.getGamePlayer().getPlayerTeam().containsMember((Player)event.getTarget())) { //check if this entity is this Object, and if so check if it's attacking its own team.
 					event.setCancelled(true); // if the creeper is attacking its team then cancel the event.
+					return;
+				}
+				else if (creeper.getGamePlayer().getPlayerTeam().containsMember((Player)event.getTarget())){ // if enemy team then ignite
+					creeper.ignite();
 					return;
 				}
 			}
