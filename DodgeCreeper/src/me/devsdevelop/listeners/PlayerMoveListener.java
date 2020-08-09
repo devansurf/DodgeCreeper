@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.config.Config;
+import me.devsdevelop.utils.Utils;
 
 public class PlayerMoveListener implements Listener{
 	private DodgeCreeper plugin;
@@ -28,7 +29,6 @@ public class PlayerMoveListener implements Listener{
 		Player player = event.getPlayer();
 
 		if (verticalLineAxis.equalsIgnoreCase("z")) {
-			Bukkit.broadcastMessage("THE LOCATION OF THE BARRIER IS: " + (middleLineCoord + (int)plugin.getSchematicManager().getLocation().getZ() + configClass.getRedCornerZ()));
 			double zLoc = player.getLocation().getZ();
 			if ((int)zLoc == (middleLineCoord + configClass.getRedCornerZ() 
 				+ (int)plugin.getSchematicManager().getLocation().getZ())) {
@@ -36,8 +36,8 @@ public class PlayerMoveListener implements Listener{
 				Location teleportLocation = 
 						new Location(player.getWorld(),player.getLocation().getX(), player.getLocation().getY(), 
 								zLoc + playerOffset(zLoc), player.getLocation().getYaw(), player.getLocation().getPitch());
-				
 				player.teleport(teleportLocation);
+				player.sendMessage(Utils.chat("&dYou are not allowed to cross to the other side."));
 			}
 		}
 		else {
@@ -49,7 +49,7 @@ public class PlayerMoveListener implements Listener{
 								xLoc + playerOffset(xLoc), player.getLocation().getYaw(), player.getLocation().getPitch());
 				
 				player.teleport(teleportLocation);
-				event.setCancelled(true);
+				player.sendMessage(Utils.chat("&dYou are not allowed to cross to the other side."));
 			}
 		}
 		
