@@ -34,13 +34,14 @@ public class Utils {
 		stick.setItemMeta(stickMeta);
 		return stick;
 	}
-	public static ItemStack createCustomArmor(Material leatherPiece, String colorName) {
+	public static ItemStack createCustomArmor(Material leatherPiece, String colorName, int enchantLevel) {
 		ItemStack item = new ItemStack(leatherPiece);
 		LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-		if (colorName.equalsIgnoreCase("black"))
-			meta.setColor(Color.BLACK);
-		else if (colorName.equalsIgnoreCase("white"))
-			meta.setColor(Color.WHITE);
+		meta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, enchantLevel, true);
+		if (colorName.equalsIgnoreCase("blue"))
+			meta.setColor(Color.BLUE);
+		else if (colorName.equalsIgnoreCase("red"))
+			meta.setColor(Color.RED);
 		item.setItemMeta(meta);
 		return item;
 		

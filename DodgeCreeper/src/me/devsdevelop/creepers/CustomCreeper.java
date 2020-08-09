@@ -23,7 +23,6 @@ public class CustomCreeper extends EntityCreeper{
 		teamColor = gamePlayer.getPlayerTeam().getTeamColor();
 		this.setPosition(loc.getX()+0.5D, loc.getY()+1, loc.getZ()+0.5D);	// place in the middle of the block
 		this.setHealth(500f);
-		this.setInvulnerable(true);
 	}
 	
 	public GamePlayer getGamePlayer() {

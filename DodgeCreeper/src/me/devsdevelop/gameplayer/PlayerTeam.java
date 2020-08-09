@@ -19,15 +19,22 @@ public class PlayerTeam {
 	public TeamColor getTeamColor() {
 		return teamColor;
 	}
+	
 	public void addTeamMember(Player player) {
 		teamMembers.add(player);
 	}
+	
+	public List<Player> getTeamMembers(){
+		return teamMembers;
+	}
+	
 	public boolean containsMember(Player player) {
 		if (teamMembers.contains(player)) {
 			return true;
 		}
 		return false;
 	}
+	
 	public void clearMembers() {
 		teamMembers.clear();
 	}

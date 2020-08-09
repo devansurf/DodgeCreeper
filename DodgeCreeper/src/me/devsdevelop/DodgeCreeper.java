@@ -11,12 +11,14 @@ import me.devsdevelop.listeners.OnHitCreeperListener;
 import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PressurePlateListener;
 import me.devsdevelop.listeners.SpawnEggListener;
+import me.devsdevelop.schedulers.EggsScheduler;
 import me.devsdevelop.schematic.SchematicManager;
 
 public class DodgeCreeper extends JavaPlugin{
 	
 	private GameManager gameManager;
 	private SchematicManager schematicManager;
+	private EggsScheduler eggsScheduler;
 	private Config config;
 	
 	@Override
@@ -26,6 +28,7 @@ public class DodgeCreeper extends JavaPlugin{
 		InstantiateClasses();
 		RegisterEvents();	
 		EnableCommands();
+		EnableSchedulers();
 		
 	}
 
@@ -41,6 +44,9 @@ public class DodgeCreeper extends JavaPlugin{
 	
 	private void EnableCommands() {
 		new GameCommand(this);
+	}
+	private void EnableSchedulers() {
+		eggsScheduler = new EggsScheduler(this);
 	}
 	private void InstantiateClasses() {
 		
@@ -58,5 +64,8 @@ public class DodgeCreeper extends JavaPlugin{
 	}
 	public Config getConfigClass() {
 		return config;
+	}
+	public EggsScheduler getEggsScheduler() {
+		return eggsScheduler;
 	}
 }

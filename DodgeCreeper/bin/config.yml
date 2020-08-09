@@ -32,15 +32,24 @@ BArena:
 #The middle line represents the number of blocks from a corner to the middle in respect with the vertical axis of the arena.
   middleline: -40
   middlelineblock: BLACK_CONCRETE
+  
 creeper:
   chargedcreeper:
     tick: 30
+    eggtimer: 200
+    amount: 1
+    
   basiccreeper:
     tick: 15
+    eggtimer: 50
+    amount: 1
+    
 item:
   stick:
     knockback: 13
     name: Knockback Stick
     description: A stick made for whacking creepers
+  armor:
+    enchant: 5
 block:
   creeperspawn: BEDROCK

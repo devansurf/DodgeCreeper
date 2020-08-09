@@ -77,10 +77,17 @@ public class Config {
 	public int getMiddleLine() {return plugin.getConfig().getInt("BArena.middleline");}
 	public int getRedCornerZ() {return plugin.getConfig().getInt("BArena.redcorner-L.getZ");}
 	public int getRedCornerX() {return plugin.getConfig().getInt("BArena.redcorner-L.getX");}
+	public int getChargedCreeperTimer() {return plugin.getConfig().getInt("creeper.chargedcreeper.eggtimer");}
+	public int getBasicCreeperTimer() {return plugin.getConfig().getInt("creeper.basiccreeper.eggtimer");}
+	public int getChargedCreeperAmount() {return plugin.getConfig().getInt("creeper.chargedcreeper.amount");}
+	public int getBasicCreeperAmount() {return plugin.getConfig().getInt("creeper.basiccreeper.amount");}
+	public int getArmorLevel() {return plugin.getConfig().getInt("item.armor.enchant");}
+	
 	public String getKnockbackStickName() {return plugin.getConfig().getString("item.stick.name");}
 	public String getKnockbackStickDescription() {return plugin.getConfig().getString("item.stick.description");}
 	public String getCreeperSpawnBlock() {return plugin.getConfig().getString("block.creeperspawn");}
 	public String getVerticalAxis() {return plugin.getConfig().getString("BArena.verticalaxis");}
 	public String getMiddleLineBlock() {return plugin.getConfig().getString("BArena.middlelineblock");}
+	
 	
 }

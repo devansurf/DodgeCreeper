@@ -1,6 +1,5 @@
 package me.devsdevelop.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +26,9 @@ public class PlayerMoveListener implements Listener{
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-
+		if (!plugin.getGameManager().gameStarted) {
+			return;
+		}
 		if (verticalLineAxis.equalsIgnoreCase("z")) {
 			double zLoc = player.getLocation().getZ();
 			if ((int)zLoc == (middleLineCoord + configClass.getRedCornerZ() 

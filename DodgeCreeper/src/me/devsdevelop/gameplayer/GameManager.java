@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.creepers.CustomCreeper;
 import me.devsdevelop.utils.Utils;
-import net.minecraft.server.v1_15_R1.EntityCreeper;
+import me.devsdevelop.utils.sound.SoundManager;
+import me.devsdevelop.utils.sound.SoundType;
 
 public class GameManager {
 
@@ -25,10 +28,10 @@ public class GameManager {
 		createTeams();
 	}
 	public void StartGame(Player player) { // the parameter player serves more for providing messages than anything else.
-//		if (gamePlayers.size() < 2) {
-//			player.sendMessage(Utils.chat("&cThere are an insufficient amount of players to start the game, use /dc add <player> to add players"));
-//			return;
-//		}
+		if (gamePlayers.size() < 1) {
+			player.sendMessage(Utils.chat("&cThere are an insufficient amount of players to start the game, use /dc add <player> to add players"));
+			return;
+		}
 		
 		if (!arenaBuilt) {
 			createArena(player);
@@ -36,11 +39,13 @@ public class GameManager {
 		gameStarted = true;
 		teleportGamePlayers();
 		giveGamePlayerItems();
-		
+		plugin.getEggsScheduler().initializeSchedulers();
 		// give player armor, items, spawn points, team, and teleport them.
 	}
 	public void clearGame() {
+	
 		gameStarted = false;
+		plugin.getEggsScheduler().stopSchedulers();
 		gamePlayers.clear();
 		creepers.clear();
 		for (PlayerTeam playerTeam : playerTeams) {
@@ -102,7 +107,14 @@ public class GameManager {
 		}
 		// store coordinates of arena in config
 	}
-	
+	public void givePlayerEggs(int amount, String type) {
+		ItemStack egg = Utils.getEgg(amount, type);
+		for (GamePlayer gp : gamePlayers) {
+			gp.getPlayer().getInventory().addItem(egg);
+			gp.getPlayer().updateInventory();
+			SoundManager.sendSound(gp.getPlayer(), gp.getPlayer().getLocation(), SoundType.POP);
+		}
+	}
 	public GamePlayer getGamePlayerFromPlayer(Player player) {
 		for (GamePlayer gp : gamePlayers) {
 			if (gp.getPlayer().equals(player)) {
@@ -144,17 +156,29 @@ public class GameManager {
 		}
 		return null;
 	}
+	
     private void teleportGamePlayers() {
     	for (GamePlayer gp : gamePlayers) {
     		gp.teleportGamePlayer();
     	}
     }
+    
     private void giveGamePlayerItems() {
-    	for (GamePlayer gamePlayer : gamePlayers) {
-    		Player player = gamePlayer.getPlayer();
-    		player.getInventory().addItem(Utils.createKnockbackStick(plugin.getConfigClass())); // knockback Sticks
-    		player.updateInventory();
+    	for (PlayerTeam playerTeam : playerTeams) {   	
+    		ItemStack[] armor = {Utils.createCustomArmor(Material.LEATHER_BOOTS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
+        					 	 Utils.createCustomArmor(Material.LEATHER_LEGGINGS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()),
+      /*Armor for each team*/	 Utils.createCustomArmor(Material.LEATHER_CHESTPLATE, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
+        					 	 Utils.createCustomArmor(Material.LEATHER_HELMET, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel())};
+  
+    		for (Player player : playerTeam.getTeamMembers()) {
+    			player.getInventory().clear(); // clear the inventory before adding items.
+    			player.getInventory().addItem(Utils.createKnockbackStick(plugin.getConfigClass())); // knockback Sticks
+    			player.getInventory().setArmorContents(armor); // equips armor to the player
+    			player.updateInventory();  //update inventory for items to take effect
+    		}
     	}
+    
+
     }
 	
 	
