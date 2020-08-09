@@ -67,12 +67,7 @@ public class Utils {
 		
 		
 	}
-	public static Location getCenterBlock(Location loc) {
-		Location location = loc;
-		location.setX(loc.getX()+0.5D);
-		location.setZ(loc.getZ()+0.5D);
-		return location;
-	}
+
 	public static String getTeamColorCode(String teamColor) {
 		String cc = "";
 		if (teamColor.equalsIgnoreCase("blue")) {

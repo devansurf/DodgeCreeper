@@ -47,7 +47,7 @@ public class SpawnEggListener implements Listener{
 				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Charged")) {
 					
 					CustomCreeper creeper = new ChargedCreeper(gameManager.getGamePlayerFromPlayer(player),
-							Utils.getCenterBlock(event.getClickedBlock().getLocation()), plugin.getConfigClass().getChargedCreeperTicks(), "charged");
+							event.getClickedBlock().getLocation(), plugin.getConfigClass().getChargedCreeperTicks(), "charged");
 					
 					WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
 					world.addEntity(creeper);	
@@ -57,7 +57,7 @@ public class SpawnEggListener implements Listener{
 				else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Basic")) {
 					
 					CustomCreeper creeper = new BasicCreeper(gameManager.getGamePlayerFromPlayer(player), 			
-							Utils.getCenterBlock(event.getClickedBlock().getLocation()), plugin.getConfigClass().getBasicCreeperTicks(), "basic");
+							event.getClickedBlock().getLocation(), plugin.getConfigClass().getBasicCreeperTicks(), "basic");
 					
 					WorldServer world =  ((CraftWorld) event.getPlayer().getWorld()).getHandle();
 					world.addEntity(creeper);

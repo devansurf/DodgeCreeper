@@ -8,6 +8,7 @@ import me.devsdevelop.config.Config;
 import me.devsdevelop.gameplayer.GameManager;
 import me.devsdevelop.listeners.CreeperTargetListener;
 import me.devsdevelop.listeners.OnHitCreeperListener;
+import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PressurePlateListener;
 import me.devsdevelop.listeners.SpawnEggListener;
 import me.devsdevelop.schematic.SchematicManager;
@@ -34,6 +35,7 @@ public class DodgeCreeper extends JavaPlugin{
 		pm.registerEvents(new SpawnEggListener(this), this);
 		pm.registerEvents(new CreeperTargetListener(this), this);
 		pm.registerEvents(new OnHitCreeperListener(this), this);
+		pm.registerEvents(new PlayerMoveListener(this), this);
 		
 	}
 	
