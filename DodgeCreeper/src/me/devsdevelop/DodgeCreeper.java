@@ -7,6 +7,7 @@ import me.devsdevelop.commands.GameCommand;
 import me.devsdevelop.config.Config;
 import me.devsdevelop.gameplayer.GameManager;
 import me.devsdevelop.listeners.CreeperTargetListener;
+import me.devsdevelop.listeners.FoodListener;
 import me.devsdevelop.listeners.OnHitCreeperListener;
 import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PressurePlateListener;
@@ -39,7 +40,7 @@ public class DodgeCreeper extends JavaPlugin{
 		pm.registerEvents(new CreeperTargetListener(this), this);
 		pm.registerEvents(new OnHitCreeperListener(this), this);
 		pm.registerEvents(new PlayerMoveListener(this), this);
-		
+		pm.registerEvents(new FoodListener(), this);
 	}
 	
 	private void EnableCommands() {

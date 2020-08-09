@@ -70,6 +70,8 @@ public class GameManager {
 		if (team == null) {
 			return "&cThe specified color does not exist in this context";
 		}
+		player.setHealth(20d);
+		player.setSaturation(0f);
 		gamePlayers.add(new GamePlayer(player,profile,team,plugin));
 		Bukkit.broadcastMessage(Utils.chat("&6" + playerName + " &ahas joined the " + Utils.getTeamColorCode(teamColor) + teamColor + "&a team !"));
 		return "&eSuccessfully added the player " + playerName + " to team " + teamColor;

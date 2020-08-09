@@ -36,12 +36,12 @@ BArena:
 creeper:
   chargedcreeper:
     tick: 30
-    eggtimer: 200
+    eggtimer: 400
     amount: 1
     
   basiccreeper:
     tick: 15
-    eggtimer: 50
+    eggtimer: 80
     amount: 1
     
 item:
