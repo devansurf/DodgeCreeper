@@ -9,11 +9,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.creepers.CustomCreeper;
 
-public class OnHitCreeperListener implements Listener{
+public class OnHitEntityListener implements Listener{
 
 private DodgeCreeper plugin;
 	
-	public OnHitCreeperListener(DodgeCreeper plugin) {
+	public OnHitEntityListener(DodgeCreeper plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -21,6 +21,9 @@ private DodgeCreeper plugin;
 	public void onHit(EntityDamageByEntityEvent event) {
 
 		if (!(event.getDamager() instanceof Player) || !(event.getEntity().getCustomName().contains("Creeper"))) { //if damager is not a player or if the damaged is not a charged creeper then ignore.
+			return;
+		}
+		if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) { // if a player hits another player
 			return;
 		}
 		Player player = (Player) event.getDamager();

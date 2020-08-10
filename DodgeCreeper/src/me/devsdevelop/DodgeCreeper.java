@@ -8,9 +8,10 @@ import me.devsdevelop.config.Config;
 import me.devsdevelop.gameplayer.GameManager;
 import me.devsdevelop.listeners.CreeperTargetListener;
 import me.devsdevelop.listeners.FoodListener;
-import me.devsdevelop.listeners.OnHitCreeperListener;
+import me.devsdevelop.listeners.OnHitEntityListener;
 import me.devsdevelop.listeners.OnPlayerDamageListener;
 import me.devsdevelop.listeners.PlayerMoveListener;
+import me.devsdevelop.listeners.PlayerRegainHealthEvent;
 import me.devsdevelop.listeners.PressurePlateListener;
 import me.devsdevelop.listeners.SpawnEggListener;
 import me.devsdevelop.schedulers.EggsScheduler;
@@ -39,10 +40,11 @@ public class DodgeCreeper extends JavaPlugin{
 		pm.registerEvents(new PressurePlateListener(this), this);
 		pm.registerEvents(new SpawnEggListener(this), this);
 		pm.registerEvents(new CreeperTargetListener(this), this);
-		pm.registerEvents(new OnHitCreeperListener(this), this);
+		pm.registerEvents(new OnHitEntityListener(this), this);
 		pm.registerEvents(new PlayerMoveListener(this), this);
 		pm.registerEvents(new FoodListener(), this);
 		pm.registerEvents(new OnPlayerDamageListener(), this);
+		pm.registerEvents(new PlayerRegainHealthEvent(), this);
 	}
 	
 	private void EnableCommands() {

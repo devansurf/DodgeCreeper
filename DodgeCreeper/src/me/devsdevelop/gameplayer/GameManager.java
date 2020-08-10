@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,6 +39,8 @@ public class GameManager {
 			createArena(player);
 		}
 		gameStarted = true;
+		creepers.clear();
+		removeAllEntitiesFromWorld(player); // dangerous if the world is used for other things
 		setupGamePlayers();
 		giveGamePlayerItems();
 		
@@ -187,6 +190,13 @@ public class GameManager {
     		}
     	}
     }
-	
+	private void removeAllEntitiesFromWorld(Player player) {
+
+        for(Entity en : player.getWorld().getEntities()){
+            if(!(en instanceof Player)) {
+            	en.remove();
+            }
+        }
+	}
 	
 }

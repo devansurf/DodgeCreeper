@@ -7,26 +7,32 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import me.devsdevelop.DodgeCreeper;
+import me.devsdevelop.creepers.CustomCreeper;
 
 
 public class EggsScheduler {
 
 	private DodgeCreeper plugin;
 	private List<Integer> scheduleIds = new ArrayList<Integer>();
-	
+	private boolean isRunning = false;
 	
 	public EggsScheduler(DodgeCreeper plugin) {
 		this.plugin = plugin;
 	}
 	public void initializeSchedulers() {
-		BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+	
+		if (!isRunning) {
+			BukkitScheduler scheduler = Bukkit.getServer().getScheduler();	
+			long basicCreeperTimer = (long)plugin.getConfigClass().getBasicCreeperTimer();
+			long chargedCreeperTimer = (long)plugin.getConfigClass().getChargedCreeperTimer();
+			int chargedCreeperAmount = plugin.getConfigClass().getChargedCreeperAmount();
+			int basicCreeperAmount = plugin.getConfigClass().getBasicCreeperAmount();
+			BasicCreeperScheduler(scheduler, basicCreeperTimer, basicCreeperAmount);
+			ChargedCreeperScheduler(scheduler, chargedCreeperTimer, chargedCreeperAmount);
+			RemoveCreeperScheduler(scheduler);
+			isRunning = true; // important that it's located after everything
+		}
 		
-		long basicCreeperTimer = (long)plugin.getConfigClass().getBasicCreeperTimer();
-		long chargedCreeperTimer = (long)plugin.getConfigClass().getChargedCreeperTimer();
-		int chargedCreeperAmount = plugin.getConfigClass().getChargedCreeperAmount();
-		int basicCreeperAmount = plugin.getConfigClass().getBasicCreeperAmount();
-		BasicCreeperScheduler(scheduler, basicCreeperTimer, basicCreeperAmount);
-		ChargedCreeperScheduler(scheduler, chargedCreeperTimer, chargedCreeperAmount);
 		
 	}
 	public void stopSchedulers() {
@@ -34,7 +40,24 @@ public class EggsScheduler {
 		for (Integer taskid : scheduleIds) {
 			scheduler.cancelTask(taskid);
 		}
+		isRunning = false;
 		
+	}
+	private void RemoveCreeperScheduler(BukkitScheduler scheduler) {
+		int taskId = scheduler.scheduleSyncRepeatingTask(plugin, new Runnable(){
+	        @Override
+	        public void run(){ 
+	        	for (CustomCreeper creeper :  plugin.getGameManager().getCreepers()) {
+	        		if (!creeper.isIgnited() && creeper.dead) {
+	        			plugin.getGameManager().getCreepers().remove(creeper);
+	        			Bukkit.broadcastMessage("Cleaned Up creeper");
+	        		}
+	        	}
+              
+	        }
+	     }, 0, 200); // ticks ->// 20 ticks = 1 second// every 10 seconds remove dead creepers.
+	      //warmup,interval
+	     scheduleIds.add(taskId);
 	}
 	private void BasicCreeperScheduler(BukkitScheduler scheduler, long timer, final int amount) {
 		  
