@@ -1,5 +1,6 @@
 package me.devsdevelop.listeners;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +27,7 @@ public class PlayerMoveListener implements Listener{
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		if (!plugin.getGameManager().gameStarted) {
+		if (!plugin.getGameManager().gameStarted || player.getGameMode().equals(GameMode.SPECTATOR)) {
 			return;
 		}
 		if (verticalLineAxis.equalsIgnoreCase("z")) {
