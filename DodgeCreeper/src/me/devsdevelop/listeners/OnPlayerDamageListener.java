@@ -20,6 +20,7 @@ public class OnPlayerDamageListener implements Listener{
 			player.setGameMode(GameMode.SPECTATOR);
 			Bukkit.broadcastMessage(Utils.chat("&aThe player &6" + player.getName() + " has been eliminated"));
 			SoundManager.sendSound(player, player.getLocation(), SoundType.BLEED);
+			event.setCancelled(true);
 		}
 		
 		
