@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,7 +24,7 @@ public class GameManager {
 	private List<PlayerTeam> playerTeams = new ArrayList<PlayerTeam>();
 	private List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 	private List<CustomCreeper> creepers = new ArrayList<CustomCreeper>();
-	private boolean arenaBuilt = false;
+
 	public boolean gameStarted = false;
 	
 	public GameManager(DodgeCreeper plugin) {
@@ -35,11 +37,11 @@ public class GameManager {
 			return;
 		}
 		
-		if (!arenaBuilt) {
-			createArena(player);
-		}
+
 		gameStarted = true;
 		creepers.clear();
+		checkBuildArena(player);
+		setGameRules(player);
 		removeAllEntitiesFromWorld(player); // dangerous if the world is used for other things
 		setupGamePlayers();
 		giveGamePlayerItems();
@@ -63,19 +65,18 @@ public class GameManager {
 		if (PlayerExists(playerName)) 
 			return "&eThe specified player already exists";	
 		
-		Player player = Bukkit.getPlayerExact(playerName);
-		if (!arenaBuilt) {
-			createArena(player);
-		}
+		Player player = Bukkit.getPlayerExact(playerName);  // player
+		checkBuildArena(player);
 		if (player == null) 
 			return  "&cThe specified player does not exist";
 		
-		PlayerProfile profile = new PlayerProfile(playerName, player.getUniqueId());
+		PlayerProfile profile = new PlayerProfile(playerName, player.getUniqueId()); //profile
 		PlayerTeam team = assignPlayerTeam(player, teamColor);
 		if (team == null) {
 			return "&cThe specified color does not exist in this context";
 		}
-		gamePlayers.add(new GamePlayer(player,profile,team,plugin));
+		
+		gamePlayers.add(new GamePlayer(player,profile,team,plugin));   // gamePlayer
 		Bukkit.broadcastMessage(Utils.chat("&6" + playerName + " &ahas joined the " + Utils.getTeamColorCode(teamColor) + teamColor + "&a team !"));
 		return "&eSuccessfully added the player " + playerName + " to team " + teamColor;
 	}
@@ -100,17 +101,19 @@ public class GameManager {
 	}
 	
 	public void createArena(Player player) {
-		if (arenaBuilt) {
+		if (plugin.getDataManager().getArena() && !worldChanged(player)) { //if attempting to create arena while an arena already exists
 			player.sendMessage(Utils.chat("&cArena has already been built in this world"));
 			return;
 		}	
-		arenaBuilt = plugin.getSchematicManager().loadSchematic(player);
-		if (arenaBuilt) {
+		
+		if(plugin.getSchematicManager().loadSchematic(player)) { // succesfully loaded the arena
+			setWorldData(player);
 			player.sendMessage(Utils.chat("&eArena has been successfully created"));
-		}else {
+		}
+		else {
 			player.sendMessage(Utils.chat("&cThe schematic was loaded unsuccesfully."));
 		}
-		// store coordinates of arena in config
+		
 	}
 	public void givePlayerEggs(int amount, String type) {
 		ItemStack egg = Utils.getEgg(amount, type);
@@ -198,5 +201,36 @@ public class GameManager {
             }
         }
 	}
+	private void setGameRules(Player player) {
+		player.getWorld().setGameRule(GameRule.MOB_GRIEFING, false);
+	}
 	
+	private void setWorldData(Player player) { // save arena location, and unique world id.
+		String worldId = player.getWorld().getUID().toString();
+		Location arenaLoc = plugin.getSchematicManager().getLocation();
+		plugin.getDataManager().setWorldUID(worldId); // set world id
+		plugin.getDataManager().setArena(true); // set arena to true
+		plugin.getDataManager().setArenaLocation(arenaLoc.getBlockX(), arenaLoc.getBlockY(),(arenaLoc.getBlockZ()));
+
+		
+	}
+	private boolean worldChanged(Player player) {
+		String worldId = player.getWorld().getUID().toString();
+		if (plugin.getDataManager().getConfig().contains("world.uuid")) { // if the path exists for worldId
+			if (plugin.getDataManager().getWorldUID().equals(worldId)) { //check if this world is the same as the saved one. 
+				return false;
+			}
+			plugin.getDataManager().setArena(false);
+		}
+		return true;
+	}
+	private boolean checkBuildArena(Player player) {
+		if (!plugin.getDataManager().getArena() || worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
+			Bukkit.broadcastMessage("getArena is: " + plugin.getDataManager().getArena());
+			Bukkit.broadcastMessage("worldChanged is: " + worldChanged(player));
+			createArena(player);
+			return true;
+		}
+		return false;
+	}
 }

@@ -30,10 +30,12 @@ public class PlayerMoveListener implements Listener{
 		if (!plugin.getGameManager().gameStarted || player.getGameMode().equals(GameMode.SPECTATOR)) {
 			return;
 		}
+		Location arenaLocation = plugin.getDataManager().getArenaLocation(player);
+		
 		if (verticalLineAxis.equalsIgnoreCase("z")) {
 			double zLoc = player.getLocation().getZ();
 			if ((int)zLoc == (middleLineCoord + configClass.getRedCornerZ() 
-				+ (int)plugin.getSchematicManager().getLocation().getZ())) {
+				+ (int)arenaLocation.getZ())) {
 				
 				Location teleportLocation = 
 						new Location(player.getWorld(),player.getLocation().getX(), player.getLocation().getY(), 
@@ -45,7 +47,7 @@ public class PlayerMoveListener implements Listener{
 		else {
 			double xLoc = player.getLocation().getX();
 			if ((int)player.getLocation().getX() == (middleLineCoord + configClass.getRedCornerX() 
-				+ (int)plugin.getSchematicManager().getLocation().getX())) {	
+				+ (int)arenaLocation.getX())) {	
 				Location teleportLocation = 
 						new Location(player.getWorld(),player.getLocation().getX(), player.getLocation().getY(), 
 								xLoc + playerOffset(xLoc), player.getLocation().getYaw(), player.getLocation().getPitch());
@@ -60,7 +62,7 @@ public class PlayerMoveListener implements Listener{
 	private int playerOffset(double coordinate) {
 		int offset = 0;
 		//check whether the nearest block is in the negative coordinate or positive coordinate.
-		if (Math.ceil(Math.abs(coordinate)) - Math.abs(coordinate) >  Math.abs(coordinate) - Math.floor(Math.abs(coordinate))) { 
+		if (Math.ceil(Math.abs(coordinate)) - Math.abs(coordinate) <  Math.abs(coordinate) - Math.floor(Math.abs(coordinate))) { 
 			//If true, it means that it's closer to the positive coordinate.
 			offset = 1;		
 		}

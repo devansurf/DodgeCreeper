@@ -48,9 +48,8 @@ public class EggsScheduler {
 	        @Override
 	        public void run(){ 
 	        	for (CustomCreeper creeper :  plugin.getGameManager().getCreepers()) {
-	        		if (!creeper.isIgnited() && creeper.dead) {
+	        		if (creeper.dead) {
 	        			plugin.getGameManager().getCreepers().remove(creeper);
-	        			Bukkit.broadcastMessage("Cleaned Up creeper");
 	        		}
 	        	}
               

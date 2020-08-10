@@ -5,7 +5,6 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import com.sk89q.worldedit.util.Direction;
 
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.gameplayer.GamePlayer;
@@ -24,12 +23,14 @@ public class Config {
 	public Location getArenaPlayerLocation(GamePlayer gamePlayer) {
 		Random rand = new Random();
 		
+		Location arenaLocation = plugin.getDataManager().getArenaLocation(gamePlayer.getPlayer());
 		Location spawnPoint;
 		int xLeft, xRight;
 		int spawnOffset;
 		int z; // z does not change for team for the same team
 		int y = plugin.getConfig().getInt("BArena.spawnheight");
 		float yaw = 0;
+		
 		
 		if (gamePlayer.getPlayerTeam().getTeamColor().equals(TeamColor.BLUE)) {
 			xLeft = plugin.getConfig().getInt("BArena.bluecorner-L.getX");
@@ -41,10 +42,10 @@ public class Config {
 			int difference = Math.abs(xRight - xLeft);
 			int rand_x = rand.nextInt(difference); // generates a number up to the size of the spawn area in the x coordinate (width)
 			
-			spawnPoint = new Location(plugin.getSchematicManager().getLocation().getWorld(),
-			plugin.getSchematicManager().getLocation().getX() + xLeft - rand_x,   // X offset and X random
-			plugin.getSchematicManager().getLocation().getY() + y,   // Y
-			plugin.getSchematicManager().getLocation().getZ() + z + spawnOffset);  // Z offset and Z constant (to spawn in center of spawn area)	
+			spawnPoint = new Location(arenaLocation.getWorld(),
+					arenaLocation.getX() + xLeft - rand_x,   // X offset and X random
+					arenaLocation.getY() + y,   // Y
+					arenaLocation.getZ() + z + spawnOffset);  // Z offset and Z constant (to spawn in center of spawn area)	
 		}
 		else if (gamePlayer.getPlayerTeam().getTeamColor().equals(TeamColor.RED)){ // copied code expect random needs to be positive so a minus sign was added (SLOPPY)
 			xLeft = plugin.getConfig().getInt("BArena.redcorner-L.getX");
@@ -56,10 +57,10 @@ public class Config {
 			int difference = xRight - xLeft;
 			int rand_x = rand.nextInt(difference); // generates a number up to the size of the spawn area in the x coordinate (width)
 			
-			spawnPoint = new Location(plugin.getSchematicManager().getLocation().getWorld(),
-			plugin.getSchematicManager().getLocation().getX() + xLeft + rand_x,   // X offset and X random
-			plugin.getSchematicManager().getLocation().getY() + y,   // Y
-			plugin.getSchematicManager().getLocation().getZ() + z + spawnOffset);  // Z offset and Z constant (to spawn in center of spawn area)	
+			spawnPoint = new Location(arenaLocation.getWorld(),
+					arenaLocation.getX() + xLeft + rand_x,   // X offset and X random
+					arenaLocation.getY() + y,   // Y
+					arenaLocation.getZ() + z + spawnOffset);  // Z offset and Z constant (to spawn in center of spawn area)	
 			
 		}
 		else {
@@ -77,6 +78,8 @@ public class Config {
 	public int getMiddleLine() {return plugin.getConfig().getInt("BArena.middleline");}
 	public int getRedCornerZ() {return plugin.getConfig().getInt("BArena.redcorner-L.getZ");}
 	public int getRedCornerX() {return plugin.getConfig().getInt("BArena.redcorner-L.getX");}
+	public int getBlueCornerZ() {return plugin.getConfig().getInt("BArena.bluecorner-L.getZ");}
+	public int getBlueCornerX() {return plugin.getConfig().getInt("BArena.bluecorner-L.getX");}
 	public int getChargedCreeperTimer() {return plugin.getConfig().getInt("creeper.chargedcreeper.eggtimer");}
 	public int getBasicCreeperTimer() {return plugin.getConfig().getInt("creeper.basiccreeper.eggtimer");}
 	public int getChargedCreeperAmount() {return plugin.getConfig().getInt("creeper.chargedcreeper.amount");}

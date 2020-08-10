@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devsdevelop.commands.GameCommand;
 import me.devsdevelop.config.Config;
+import me.devsdevelop.data.DataManager;
 import me.devsdevelop.gameplayer.GameManager;
 import me.devsdevelop.listeners.CreeperTargetListener;
 import me.devsdevelop.listeners.FoodListener;
@@ -23,18 +24,31 @@ public class DodgeCreeper extends JavaPlugin{
 	private SchematicManager schematicManager;
 	private EggsScheduler eggsScheduler;
 	private Config config;
+	private DataManager data;
 	
 	@Override
 	public void onEnable() {
-		saveDefaultConfig();
+			
 		// ORDER MATTERS
+		LoadConfigs();
 		InstantiateClasses();
 		RegisterEvents();	
 		EnableCommands();
-		EnableSchedulers();
+		EnableSchedulers();		
+	}
+	
+	@Override
+	public void onDisable() {
 		
 	}
-
+	
+	private void LoadConfigs() {
+		saveDefaultConfig();
+		data = new DataManager(this);
+		data.saveDefaultConfig();
+		
+	}
+	
 	private void RegisterEvents() {
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new PressurePlateListener(this), this);
@@ -57,8 +71,7 @@ public class DodgeCreeper extends JavaPlugin{
 		
 		gameManager = new GameManager(this);
 		schematicManager = new SchematicManager(this);
-		config = new Config(this);
-		
+		config = new Config(this);	
 	}
 	
 	public GameManager getGameManager() {
@@ -72,5 +85,8 @@ public class DodgeCreeper extends JavaPlugin{
 	}
 	public EggsScheduler getEggsScheduler() {
 		return eggsScheduler;
+	}
+	public DataManager getDataManager() {
+		return data;
 	}
 }

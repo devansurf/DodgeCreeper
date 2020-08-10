@@ -6,8 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import me.devsdevelop.DodgeCreeper;
 
@@ -54,7 +57,33 @@ public class DataManager {
 		if (this.configFile == null) {
 			this.configFile = new File(this.plugin.getDataFolder(),"data.yml");
 		}
+		if (!this.configFile.exists()) {
+			this.plugin.saveResource("data.yml", false);
+		}
 	}
-
+	
+	
+	public void setArenaLocation(int x, int y, int z) {
+		getConfig().set("world.arena.x", x); // set arena coords
+		getConfig().set("world.arena.y", y);
+		getConfig().set("world.arena.z", z);
+		saveConfig();
+	}
+	public Location getArenaLocation(Player player) {
+		Location loc = new Location(player.getWorld(), 
+				getConfig().getInt("world.arena.x"),
+				getConfig().getInt("world.arena.y"),
+				getConfig().getInt("world.arena.z"));
+		return loc;
+	}
+	public void setWorldUID(String UID) {getConfig().set("world.uuid", UID);saveConfig();}
+	public String getWorldUID() {return getConfig().getString("world.uuid");}
+	
+	public void setArena(Boolean value) {getConfig().set("world.arena.value", value);saveConfig();}
+	public boolean getArena() {return getConfig().getBoolean("world.arena.value");}
+	
+	
+		
+	
 }
 
