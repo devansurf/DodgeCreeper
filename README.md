@@ -1,6 +1,8 @@
 # DodgeCreeper v.1.0.0
 /----------Commands----------/
+---
 /dc                     -Displays all available commands
+---
 /dc start               -Starts the minigame
 /dc stop                -Stops the minigame
 /dc add <player> <team> -Adds a player to the specified team in the minigame.
