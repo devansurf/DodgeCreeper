@@ -4,7 +4,7 @@
 ---
 ```
 Whack a creeper to the opponents side of the arena and wreck havoc.
-First team to eliminate the other team wins!/
+First team to eliminate the other team wins!
 ```
 /----------Commands----------/
 ---
