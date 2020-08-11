@@ -40,6 +40,9 @@ public class GameCommand implements CommandExecutor{
 					player.sendMessage(Utils.chat("&eStoping the game..."));
 					plugin.getGameManager().clearGame();
 				}
+				else if (args[0].equalsIgnoreCase("addall")) {
+					player.sendMessage(plugin.getGameManager().addAllPlayers());
+				}
 				return true;
 			case 2:
 				if (args[0].equalsIgnoreCase("add")) {
@@ -53,10 +56,11 @@ public class GameCommand implements CommandExecutor{
 						player.sendMessage(Utils.chat("&eThe player " + args[1] + " &ewas successfully removed from the game!"));
 					}			
 				}
+				
 				return true;
 			case 3:
 				if (args[0].equalsIgnoreCase("add")) {
-					String s = plugin.getGameManager().addPlayer(args[1], args[2]);
+					String s = plugin.getGameManager().addPlayer(args[1], args[2]); // playerName, teamcolor
 					player.sendMessage(Utils.chat(s));	
 				}
 				return true;

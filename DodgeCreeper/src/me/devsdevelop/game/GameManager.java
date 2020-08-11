@@ -1,4 +1,4 @@
-package me.devsdevelop.gameplayer;
+package me.devsdevelop.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,13 +64,12 @@ public class GameManager {
 
 		if (PlayerExists(playerName)) 
 			return "&eThe specified player already exists";	
-		
-		Player player = Bukkit.getPlayerExact(playerName);  // player
-		checkBuildArena(player);
+		Player player = Bukkit.getPlayerExact(playerName);  // player		
 		if (player == null) 
 			return  "&cThe specified player does not exist";
 		
-		PlayerProfile profile = new PlayerProfile(playerName, player.getUniqueId()); //profile
+		checkBuildArena(player);
+		PlayerProfile profile = new PlayerProfile(playerName, player.getUniqueId()); //profile, not used yet.
 		PlayerTeam team = assignPlayerTeam(player, teamColor);
 		if (team == null) {
 			return "&cThe specified color does not exist in this context";
@@ -79,6 +78,25 @@ public class GameManager {
 		gamePlayers.add(new GamePlayer(player,profile,team,plugin));   // gamePlayer
 		Bukkit.broadcastMessage(Utils.chat("&6" + playerName + " &ahas joined the " + Utils.getTeamColorCode(teamColor) + teamColor + "&a team !"));
 		return "&eSuccessfully added the player " + playerName + " to team " + teamColor;
+	}
+	
+	public String addAllPlayers() { // adds all remaining online players to the game in a balanced fashion.
+
+		int playersAdded = 0;
+		
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			
+			if (!gamePlayersContainsPlayer(player)) { // if a player is not added to the game
+				PlayerProfile profile = new PlayerProfile(player.getName(), player.getUniqueId()); //profile, not used yet.
+				PlayerTeam team = assignPlayerTeam(player, getSmallerTeamColor()); // adds player to the team with less members.
+				gamePlayers.add(new GamePlayer(player,profile,team,plugin)); 
+				playersAdded++;
+				Bukkit.broadcastMessage(Utils.chat("&6" + player.getName() + " &ahas joined the " 
+						+ Utils.getTeamColorCode(team.getTeamColor().toString()) + team.getTeamColor().toString() + "&a team !"));
+			}
+				
+		}
+		return Utils.chat("&aAdded a total of &6" + playersAdded + " &aplayer(&es&a) to the game.");
 	}
 	
 	public boolean removePlayer(String playerName) {
@@ -147,6 +165,26 @@ public class GameManager {
 	}
 	public ArrayList<CustomCreeper> getCreepers(){
 		return (ArrayList<CustomCreeper>) creepers;
+	}
+	private boolean gamePlayersContainsPlayer(Player player) {
+		for (GamePlayer gamePlayer : gamePlayers) {
+			if (gamePlayer.getPlayer().equals(player)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private String getSmallerTeamColor() { // returns the teamColor with less members.
+		String smallerTeam = playerTeams.get(0).getTeamColor().toString();
+		int prevTeamNum = playerTeams.get(0).getTotalMembers();
+		
+		for (PlayerTeam playerTeam : playerTeams) {
+			if (playerTeam.getTotalMembers() < prevTeamNum) { //if a team has less members than another team
+				prevTeamNum = playerTeam.getTotalMembers();
+				smallerTeam = playerTeam.getTeamColor().toString();
+			}
+		}
+		return smallerTeam;
 	}
 	
 	private void createTeams() {

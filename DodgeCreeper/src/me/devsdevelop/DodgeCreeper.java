@@ -6,7 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.devsdevelop.commands.GameCommand;
 import me.devsdevelop.config.Config;
 import me.devsdevelop.data.DataManager;
-import me.devsdevelop.gameplayer.GameManager;
+import me.devsdevelop.game.GameManager;
+import me.devsdevelop.listeners.BlockBreakListener;
 import me.devsdevelop.listeners.CreeperTargetListener;
 import me.devsdevelop.listeners.FoodListener;
 import me.devsdevelop.listeners.OnHitEntityListener;
@@ -58,6 +59,7 @@ public class DodgeCreeper extends JavaPlugin{
 		pm.registerEvents(new FoodListener(), this);
 		pm.registerEvents(new OnPlayerDamageListener(), this);
 		pm.registerEvents(new PlayerRegainHealthEvent(), this);
+		pm.registerEvents(new BlockBreakListener(this), this);
 	}
 	
 	private void EnableCommands() {

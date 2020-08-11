@@ -7,7 +7,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class SoundManager {
+public class SoundManager { // -DISCLAIMER- THIS CODE WAS MOSTLY DEVELOPED BY THE DEVELOPERS OF MCMMO
     /**
      * Sends a sound to the player
      * @param soundType the type of sound

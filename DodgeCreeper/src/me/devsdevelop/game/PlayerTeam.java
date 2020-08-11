@@ -1,4 +1,4 @@
-package me.devsdevelop.gameplayer;
+package me.devsdevelop.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,9 @@ public class PlayerTeam {
 		return teamMembers;
 	}
 	
+	public int getTotalMembers() {
+		return teamMembers.size();
+	}
 	public boolean containsMember(Player player) {
 		if (teamMembers.contains(player)) {
 			return true;

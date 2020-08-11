@@ -13,7 +13,7 @@ import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.creepers.BasicCreeper;
 import me.devsdevelop.creepers.ChargedCreeper;
 import me.devsdevelop.creepers.CustomCreeper;
-import me.devsdevelop.gameplayer.GameManager;
+import me.devsdevelop.game.GameManager;
 import me.devsdevelop.utils.Utils;
 import net.minecraft.server.v1_15_R1.WorldServer;
 

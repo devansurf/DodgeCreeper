@@ -1,8 +1,8 @@
-package me.devsdevelop.gameplayer;
+package me.devsdevelop.game;
 
 import java.util.UUID;
 
-public class PlayerProfile {
+public class PlayerProfile {  // class that will store player stats in the future.
 	
 	 private final String playerName;
 	 private UUID uuid;

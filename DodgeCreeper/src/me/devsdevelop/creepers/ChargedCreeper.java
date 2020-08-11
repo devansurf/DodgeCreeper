@@ -1,7 +1,8 @@
 package me.devsdevelop.creepers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import me.devsdevelop.gameplayer.GamePlayer;
+
+import me.devsdevelop.game.GamePlayer;
 import net.minecraft.server.v1_15_R1.ChatComponentText;
 
 

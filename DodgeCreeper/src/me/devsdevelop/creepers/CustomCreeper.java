@@ -3,8 +3,8 @@ package me.devsdevelop.creepers;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 
-import me.devsdevelop.gameplayer.GamePlayer;
-import me.devsdevelop.gameplayer.TeamColor;
+import me.devsdevelop.game.GamePlayer;
+import me.devsdevelop.game.TeamColor;
 import net.minecraft.server.v1_15_R1.EntityCreeper;
 import net.minecraft.server.v1_15_R1.EntityTypes;
 

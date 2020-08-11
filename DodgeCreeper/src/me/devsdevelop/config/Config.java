@@ -7,8 +7,8 @@ import org.bukkit.Location;
 
 
 import me.devsdevelop.DodgeCreeper;
-import me.devsdevelop.gameplayer.GamePlayer;
-import me.devsdevelop.gameplayer.TeamColor;
+import me.devsdevelop.game.GamePlayer;
+import me.devsdevelop.game.TeamColor;
 
 public class Config {
 	

@@ -1,4 +1,4 @@
-package me.devsdevelop.gameplayer;
+package me.devsdevelop.game;
 
 import org.bukkit.Color;
 
