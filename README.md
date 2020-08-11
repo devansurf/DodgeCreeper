@@ -1,5 +1,5 @@
-# DodgeCreeper v.1.0.0
-/----------Commands----------/
+# DodgeCreeper v.1.0.0\n
+/----------Commands----------/\n
 /dc                     -Displays all available commands
 /dc start               -Starts the minigame
 /dc stop                -Stops the minigame
