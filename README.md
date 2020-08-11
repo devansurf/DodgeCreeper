@@ -6,9 +6,9 @@
 /dc start               -Starts the minigame
 ---
 /dc stop                -Stops the minigame
----
+------------------------
 /dc add <player> <team> -Adds a player to the specified team in the minigame.
----
+------------------------
 /dc addall              -Assigns everybody online to a team.
 ---
 /dc remove <player>     -Removes a player from the minigame.
