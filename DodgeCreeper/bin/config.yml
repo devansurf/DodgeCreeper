@@ -51,5 +51,7 @@ item:
     description: A stick made for whacking creepers
   armor:
     enchant: 5
+  egg:
+    amount: 5
 block:
   creeperspawn: BEDROCK

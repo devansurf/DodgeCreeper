@@ -1,6 +1,5 @@
 package me.devsdevelop.listeners;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 import org.bukkit.entity.Player;

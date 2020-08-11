@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import me.devsdevelop.DodgeCreeper;
 
 
-public class GamePlayer {
+public class GamePlayer{
 
 	private DodgeCreeper plugin;
 	private Player player;

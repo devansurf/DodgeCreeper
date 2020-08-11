@@ -27,8 +27,7 @@ public class DodgeCreeper extends JavaPlugin{
 	private DataManager data;
 	
 	@Override
-	public void onEnable() {
-			
+	public void onEnable() {		
 		// ORDER MATTERS
 		LoadConfigs();
 		InstantiateClasses();

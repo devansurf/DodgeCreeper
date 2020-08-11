@@ -85,7 +85,7 @@ public class Config {
 	public int getChargedCreeperAmount() {return plugin.getConfig().getInt("creeper.chargedcreeper.amount");}
 	public int getBasicCreeperAmount() {return plugin.getConfig().getInt("creeper.basiccreeper.amount");}
 	public int getArmorLevel() {return plugin.getConfig().getInt("item.armor.enchant");}
-	
+	public int getMaxEggs() {return plugin.getConfig().getInt("item.egg.amount");}
 	public String getKnockbackStickName() {return plugin.getConfig().getString("item.stick.name");}
 	public String getKnockbackStickDescription() {return plugin.getConfig().getString("item.stick.description");}
 	public String getCreeperSpawnBlock() {return plugin.getConfig().getString("block.creeperspawn");}

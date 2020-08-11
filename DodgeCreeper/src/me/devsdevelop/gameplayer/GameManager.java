@@ -118,7 +118,8 @@ public class GameManager {
 	public void givePlayerEggs(int amount, String type) {
 		ItemStack egg = Utils.getEgg(amount, type);
 		for (GamePlayer gp : gamePlayers) {
-			if (gp.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+			if (gp.getPlayer().getGameMode().equals(GameMode.SURVIVAL)  // if in survival and max eggs not reached
+					&& !gp.getPlayer().getInventory().containsAtLeast(egg, plugin.getConfigClass().getMaxEggs())) {
 				gp.getPlayer().getInventory().addItem(egg);
 				gp.getPlayer().updateInventory();
 				SoundManager.sendSound(gp.getPlayer(), gp.getPlayer().getLocation(), SoundType.POP);
