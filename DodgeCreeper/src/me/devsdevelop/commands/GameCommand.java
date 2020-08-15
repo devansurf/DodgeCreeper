@@ -25,7 +25,7 @@ public class GameCommand implements CommandExecutor{
 		switch (args.length) {
 			case 0:
 				player.sendMessage(Utils.chat("&o&c--------&eList of commands&c--------\n&c/dc add <player> <team>\n/dc remove <player> <team>\n"
-						+ "/dc create\n/dc start\n/dc stop"));
+						+ "/dc create\n/dc start\n/dc stop\n/dc addall"));
 				return true;
 			case 1:
 				if (args[0].equalsIgnoreCase("start")) {

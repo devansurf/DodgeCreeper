@@ -21,6 +21,7 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sun.javafx.geom.Rectangle;
 
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.utils.Utils;
@@ -30,6 +31,7 @@ public class SchematicManager {
 	
 	private DodgeCreeper plugin;
 	private Location location;
+	
 	private int maxBlocks;
 	private Clipboard clipboard;
 	public SchematicManager (DodgeCreeper plugin) {
@@ -39,7 +41,6 @@ public class SchematicManager {
 	public boolean loadSchematic(Player player) {
 		location = player.getLocation();
 		File schematic = new File(plugin.getDataFolder() + File.separator + "/schematics/BArena.schem"); // biome arena
-		
 		ClipboardFormat format = ClipboardFormats.findByFile(schematic);
 		try (ClipboardReader reader = format.getReader(new FileInputStream(schematic))) { // find the schematic
 		    clipboard = reader.read();

@@ -6,11 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import com.sun.javafx.geom.Rectangle;
 
 import me.devsdevelop.DodgeCreeper;
 
@@ -75,6 +76,24 @@ public class DataManager {
 				getConfig().getInt("world.arena.y"),
 				getConfig().getInt("world.arena.z"));
 		return loc;
+	}
+	
+	public void setArenaRectangle(int x, int y, int width, int height) {
+		getConfig().set("world.arena.rectangle.x", x); // set arena coords
+		getConfig().set("world.arena.rectangle.y", y);
+		getConfig().set("world.arena.rectangle.width", width);
+		getConfig().set("world.arena.rectangle.height", height);
+		saveConfig();
+	
+	}
+	
+	public Rectangle getArenaRectangle() { // default config is saved first, therefore we can access the coords to the other config from here.
+		Rectangle rect = new Rectangle();
+		rect.setBounds(getConfig().getInt("world.arena.rectangle.x"), 
+					   getConfig().getInt("world.arena.rectangle.y"),
+					   getConfig().getInt("world.arena.rectangle.width"),
+					   getConfig().getInt("world.arena.rectangle.height"));
+		return rect;
 	}
 	public void setWorldUID(String UID) {getConfig().set("world.uuid", UID);saveConfig();}
 	public String getWorldUID() {return getConfig().getString("world.uuid");}

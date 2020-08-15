@@ -34,6 +34,19 @@ public class Utils {
 		stick.setItemMeta(stickMeta);
 		return stick;
 	}
+	public static ItemStack createKnockbackStickTwo(Config config) { // TO BE CHANGED LATER
+		
+		List<String> lore = new ArrayList<String>();
+		
+		ItemStack stick = new ItemStack(Material.STICK);
+		ItemMeta stickMeta = stick.getItemMeta();
+		stickMeta.addEnchant(Enchantment.KNOCKBACK, config.getKnockbackStickValue()/2, true);
+		stickMeta.setDisplayName(config.getKnockbackStickName());
+		lore.add(config.getKnockbackStickDescription());
+		stickMeta.setLore(lore);
+		stick.setItemMeta(stickMeta);
+		return stick;
+	}
 	public static ItemStack createCustomArmor(Material leatherPiece, String colorName, int enchantLevel) {
 		ItemStack item = new ItemStack(leatherPiece);
 		LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();

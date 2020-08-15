@@ -62,7 +62,7 @@ public class PlayerMoveListener implements Listener{
 	private int playerOffset(double coordinate) {
 		int offset = 0;
 		//check whether the nearest block is in the negative coordinate or positive coordinate.
-		if (Math.ceil(Math.abs(coordinate)) - Math.abs(coordinate) <  Math.abs(coordinate) - Math.floor(Math.abs(coordinate))) { 
+		if (Math.ceil(Math.abs(coordinate)) - Math.abs(coordinate) >  Math.abs(coordinate) - Math.floor(Math.abs(coordinate))) { 
 			//If true, it means that it's closer to the positive coordinate.
 			offset = 1;		
 		}
