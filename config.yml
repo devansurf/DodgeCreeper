@@ -1,0 +1,59 @@
+#DodgeCreeper v1.0.0
+
+#Coordinates of interior corners of the arena relative the the spawning location of the arena.
+#Values obtained by the difference of arenalocation-cornerlocation
+
+BArena:
+  redcorner-L:
+    getX: 8
+    getZ: -11
+  redcorner-R:
+    getX: 42
+    getZ: -11
+  bluecorner-L:
+    getX: 42
+    getZ: -86
+  bluecorner-R:
+    getX: 8
+    getZ: -86
+  spawnheight: -10
+  
+  redspawnoffset: -5
+  bluespawnoffset: 5
+  
+#The value yaw is equivalent to looking at a clock where North is 0 degrees and South is 180 degrees.
+  redyaw: 180
+  blueyaw: 0
+  
+#Vertical axis represents the changing coordinate when crossing from one side of the team to the other.
+  verticalaxis: Z
+
+  
+#The middle line represents the number of blocks from a corner to the middle in respect with the vertical axis of the arena.
+  middleline: -40
+  middlelineblock: BLACK_CONCRETE
+  
+creeper:
+  chargedcreeper:
+    tick: 30
+    eggtimer: 400
+    amount: 1
+    
+  basiccreeper:
+    tick: 15
+    eggtimer: 80
+    amount: 1
+    
+item:
+  stick:
+    knockback: 13
+    name: Knockback Stick
+    description: A stick made for whacking creepers
+  armor:
+    enchant: 5
+  egg:
+    amount: 5
+  powerup:
+    timer: 10
+block:
+  creeperspawn: BEDROCK
