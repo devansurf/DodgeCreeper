@@ -89,7 +89,7 @@ public class Config {
 	public int getArenaHeight() {
 		return Math.abs(getRedCornerZ()-getBlueCornerZ());
 	}
-	public int getMiddleLine() {return (getRedCornerZ()-getBlueCornerZ())/2 ;}
+	public int getMiddleLine() {return ((getBlueCornerZ() - getRedCornerZ())/2)-2 ;}
 	
 	public int getChargedCreeperTimer() {return plugin.getConfig().getInt("creeper.chargedcreeper.eggtimer");}
 	public int getBasicCreeperTimer() {return plugin.getConfig().getInt("creeper.basiccreeper.eggtimer");}

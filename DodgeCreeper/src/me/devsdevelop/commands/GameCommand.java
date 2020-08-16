@@ -1,16 +1,19 @@
 package me.devsdevelop.commands;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.devsdevelop.DodgeCreeper;
+import me.devsdevelop.powerup.PowerUpBlockGroup;
 import me.devsdevelop.utils.Utils;
 
 public class GameCommand implements CommandExecutor{
 	
 	private DodgeCreeper plugin;
+	private PowerUpBlockGroup beacon;
 	public GameCommand(DodgeCreeper plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("dc").setExecutor(this);
@@ -42,6 +45,12 @@ public class GameCommand implements CommandExecutor{
 				}
 				else if (args[0].equalsIgnoreCase("addall")) {
 					player.sendMessage(plugin.getGameManager().addAllPlayers());
+				}
+				else if (args[0].equalsIgnoreCase("beacon")) {
+					beacon = new PowerUpBlockGroup(player.getLocation(), Material.ORANGE_STAINED_GLASS);
+				}
+				else if (args[0].equalsIgnoreCase("rbeacon")) {
+					beacon.revertBlockGroup();
 				}
 				return true;
 			case 2:
