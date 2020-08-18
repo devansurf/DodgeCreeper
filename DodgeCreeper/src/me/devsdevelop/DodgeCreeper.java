@@ -16,7 +16,7 @@ import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PlayerRegainHealthEvent;
 import me.devsdevelop.listeners.PressurePlateListener;
 import me.devsdevelop.listeners.SpawnEggListener;
-import me.devsdevelop.powerup.PowerUpManager;
+import me.devsdevelop.powerup.PowerUpBlockManager;
 import me.devsdevelop.schedulers.EggsScheduler;
 import me.devsdevelop.schematic.SchematicManager;
 
@@ -24,7 +24,7 @@ public class DodgeCreeper extends JavaPlugin{
 	
 	private GameManager gameManager;
 	private SchematicManager schematicManager;
-	private PowerUpManager powerUpManager;
+	private PowerUpBlockManager powerUpBlockManager;
 	private EggsScheduler eggsScheduler;
 	private Config config;
 	private DataManager data;
@@ -74,7 +74,7 @@ public class DodgeCreeper extends JavaPlugin{
 		
 		gameManager = new GameManager(this);
 		schematicManager = new SchematicManager(this);
-		powerUpManager = new PowerUpManager(this);
+		powerUpBlockManager = new PowerUpBlockManager(this);
 		config = new Config(this);	
 	}
 	
@@ -92,5 +92,8 @@ public class DodgeCreeper extends JavaPlugin{
 	}
 	public DataManager getDataManager() {
 		return data;
+	}
+	public PowerUpBlockManager getPowerUpManager() {
+		return powerUpBlockManager;
 	}
 }

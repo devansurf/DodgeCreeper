@@ -21,7 +21,6 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sun.javafx.geom.Rectangle;
 
 import me.devsdevelop.DodgeCreeper;
 import me.devsdevelop.utils.Utils;
