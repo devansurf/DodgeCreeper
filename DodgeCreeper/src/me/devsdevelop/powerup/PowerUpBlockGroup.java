@@ -11,14 +11,14 @@ import org.bukkit.block.Block;
 public class PowerUpBlockGroup {
 
 	private Location location;
-	private Material glass;
+	private PowerUp powerUp;
 	private boolean generated;
 	private Map<String, Material> blockMap = new HashMap<String,Material>();
 	
-	public PowerUpBlockGroup(Location location, Material glass) {
+	public PowerUpBlockGroup(Location location, PowerUp powerUp) {
 		
 		this.location = location;
-		this.glass = glass;
+		this.powerUp = powerUp;
 		generated = true;
 		generateBeacon();
 	}
@@ -26,8 +26,8 @@ public class PowerUpBlockGroup {
 	public Location getLocation() {
 		return this.location;
 	}
-	public Material getGlass() {
-		return this.glass;
+	public PowerUp getPowerUp() {
+		return this.powerUp;
 	}
 	public boolean isGenerated() {
 		return generated;
@@ -77,10 +77,10 @@ public class PowerUpBlockGroup {
 			Block aboveBlock = world.getBlockAt(x, yPoint, z);
 			if (!aboveBlock.getType().equals(Material.AIR)) { // if its not air
 				blockMap.put("top"+yPoint, aboveBlock.getType());
-				aboveBlock.setType(glass);
+				aboveBlock.setType(powerUp.getGlass());
 			}
 		}
-		topBlock.setType(glass);
+		topBlock.setType(powerUp.getGlass());
 		middleBlock.setType(Material.BEACON); // beacon block, under the glass
 		
 		for (int xPoint = x-1; xPoint <= x+1 ; xPoint++) {  // creates 3x3 grid of iron blocks centering on the location

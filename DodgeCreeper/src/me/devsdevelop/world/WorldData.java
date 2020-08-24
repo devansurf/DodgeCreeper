@@ -19,10 +19,6 @@ public class WorldData {
 		plugin.getDataManager().setWorldUID(worldId); // set world id
 		plugin.getDataManager().setArena(true); // set arena to true
 		plugin.getDataManager().setArenaLocation(arenaLoc.getBlockX(), arenaLoc.getBlockY(),(arenaLoc.getBlockZ()));
-		plugin.getDataManager().setArenaRectangle(arenaLoc.getBlockX() + plugin.getConfigClass().getRedCornerX(), 
-												  arenaLoc.getBlockY() + plugin.getConfigClass().getRedCornerZ(), 
-												  plugin.getConfigClass().getArenaWidth(),
-												  plugin.getConfigClass().getArenaHeight());
 	
 	}
 	public boolean worldChanged(Player player) {

@@ -22,14 +22,22 @@ public abstract class PowerUpItem extends ItemStack{
 		super(material, amount);
 		this.powerUp = powerUp;
 		this.displayName = displayName;
+		setCustomModelId(powerUp.getCustomModelId());
 		setAsEnchanted();
 		setNameData();
+	
 	}
 	
 	abstract public void activatePowerUp(Player player);
 	
 	public PowerUp getPowerUp() {
 		return powerUp;
+	}
+	
+	private void setCustomModelId(int customModelData) {
+		ItemMeta meta  = getItemMeta();
+		meta.setCustomModelData(customModelData);
+		setItemMeta(meta);
 	}
 	
 	private void setAsEnchanted(){
@@ -44,5 +52,6 @@ public abstract class PowerUpItem extends ItemStack{
 		lore.add(Utils.chat("&dRight click to use Power Up!"));
 		meta.setLore(lore);
 		meta.setDisplayName(displayName);
+		setItemMeta(meta);
 	}
 }

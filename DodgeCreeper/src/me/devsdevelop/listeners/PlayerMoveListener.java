@@ -30,7 +30,7 @@ public class PlayerMoveListener implements Listener{
 		if (!plugin.getGameManager().gameStarted || player.getGameMode().equals(GameMode.SPECTATOR)) {
 			return;
 		}
-		Location arenaLocation = plugin.getDataManager().getArenaLocation(player);
+		Location arenaLocation = plugin.getDataManager().getArenaLocation();
 		
 		if (verticalLineAxis.equalsIgnoreCase("z")) {
 			double zLoc = player.getLocation().getZ();

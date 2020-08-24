@@ -45,14 +45,14 @@ public class GameManager {
 		removeAllEntitiesFromWorld(player); // dangerous if the world is used for other things
 		setupGamePlayers();
 		giveGamePlayerItems();
-		
-		plugin.getEggsScheduler().initializeSchedulers();
+		initializeSchedulers();
 		// give player armor, items, spawn points, team, and teleport them.
 	}
 	public void clearGame() {
 	
 		gameStarted = false;
 		plugin.getEggsScheduler().stopSchedulers();
+		plugin.getPowerUpScheduler().stopSchedulers();
 		gamePlayers.clear();
 		creepers.clear();
 		for (PlayerTeam playerTeam : playerTeams) {
@@ -119,7 +119,7 @@ public class GameManager {
 	}
 	
 	public void createArena(Player player) {
-		if (plugin.getDataManager().getArena() && !worldData.worldChanged(player)) { //if attempting to create arena while an arena already exists
+		if (plugin.getDataManager().hasArena() && !worldData.worldChanged(player)) { //if attempting to create arena while an arena already exists
 			player.sendMessage(Utils.chat("&cArena has already been built in this world"));
 			return;
 		}	
@@ -155,7 +155,9 @@ public class GameManager {
 	public ArrayList<PlayerTeam> getPlayerTeams() {
 		return (ArrayList<PlayerTeam>) playerTeams;
 	}
-	
+	public ArrayList<GamePlayer> getGamePlayers() {
+		return (ArrayList<GamePlayer>) gamePlayers;
+	}
 	public int getTotalPlayers() {
 		return gamePlayers.size();
 	}
@@ -233,6 +235,12 @@ public class GameManager {
     		}
     	}
     }
+    
+    private void initializeSchedulers() {
+    	plugin.getEggsScheduler().initializeSchedulers();
+    	plugin.getPowerUpScheduler().initializeSchedulers();
+    }
+    
 	private void removeAllEntitiesFromWorld(Player player) {
 
         for(Entity en : player.getWorld().getEntities()){
@@ -247,8 +255,8 @@ public class GameManager {
 	
 
 	private boolean checkBuildArena(Player player) {
-		if (!plugin.getDataManager().getArena() || worldData.worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
-			Bukkit.broadcastMessage("getArena is: " + plugin.getDataManager().getArena());
+		if (!plugin.getDataManager().hasArena() || worldData.worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
+			Bukkit.broadcastMessage("getArena is: " + plugin.getDataManager().hasArena());
 			Bukkit.broadcastMessage("worldChanged is: " + worldData.worldChanged(player));
 			createArena(player);
 			return true;

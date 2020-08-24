@@ -1,8 +1,8 @@
 package me.devsdevelop.powerup.items;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
 import me.devsdevelop.powerup.PowerUp;
 import me.devsdevelop.utils.Utils;
 
@@ -14,8 +14,7 @@ public class HealthPU extends PowerUpItem{
 
 	@Override
 	public void activatePowerUp(Player player) {
-	
+		Bukkit.broadcastMessage("Activated Health");
 		
 	}
-
 }

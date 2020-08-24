@@ -46,12 +46,7 @@ public class GameCommand implements CommandExecutor{
 				else if (args[0].equalsIgnoreCase("addall")) {
 					player.sendMessage(plugin.getGameManager().addAllPlayers());
 				}
-				else if (args[0].equalsIgnoreCase("beacon")) {
-					beacon = new PowerUpBlockGroup(player.getLocation(), Material.ORANGE_STAINED_GLASS);
-				}
-				else if (args[0].equalsIgnoreCase("rbeacon")) {
-					beacon.revertBlockGroup();
-				}
+
 				return true;
 			case 2:
 				if (args[0].equalsIgnoreCase("add")) {

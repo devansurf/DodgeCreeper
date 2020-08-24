@@ -23,12 +23,12 @@ public class Config {
 	public Location getArenaPlayerLocation(GamePlayer gamePlayer) {
 		Random rand = new Random();
 		
-		Location arenaLocation = plugin.getDataManager().getArenaLocation(gamePlayer.getPlayer());
+		Location arenaLocation = plugin.getDataManager().getArenaLocation();
 		Location spawnPoint;
 		int xLeft, xRight;
 		int spawnOffset;
 		int z; // z does not change for team for the same team
-		int y = plugin.getConfig().getInt("BArena.spawnheight");
+		int y = getSpawnHeight();
 		float yaw = 0;
 		
 		
@@ -74,6 +74,7 @@ public class Config {
 	
 	public int getChargedCreeperTicks() {return plugin.getConfig().getInt("creeper.chargedcreeper.tick");}
 	public int getBasicCreeperTicks() {return plugin.getConfig().getInt("creeper.basiccreeper.tick");}
+	
 	public int getKnockbackStickValue() {return plugin.getConfig().getInt("item.stick.knockback");}
 	
 	
@@ -82,11 +83,13 @@ public class Config {
 	public int getBlueCornerZ() {return plugin.getConfig().getInt("BArena.bluecorner-L.getZ");}
 	public int getBlueCornerX() {return plugin.getConfig().getInt("BArena.bluecorner-L.getX");}
 	
+	public int getSpawnHeight() {return plugin.getConfig().getInt("BArena.spawnheight");}
+	
 	public int getArenaWidth() {
-		return Math.abs(getRedCornerX()-getBlueCornerX());
+		return getBlueCornerX() - getRedCornerX();
 	}
 	public int getArenaHeight() {
-		return Math.abs(getRedCornerZ()-getBlueCornerZ());
+		return getBlueCornerZ() - getRedCornerZ();
 	}
 	public int getMiddleLine() {return ((getBlueCornerZ() - getRedCornerZ())/2)-2 ;}
 	
@@ -94,9 +97,16 @@ public class Config {
 	public int getBasicCreeperTimer() {return plugin.getConfig().getInt("creeper.basiccreeper.eggtimer");}
 	public int getChargedCreeperAmount() {return plugin.getConfig().getInt("creeper.chargedcreeper.amount");}
 	public int getBasicCreeperAmount() {return plugin.getConfig().getInt("creeper.basiccreeper.amount");}
+	
 	public int getArmorLevel() {return plugin.getConfig().getInt("item.armor.enchant");}
+	
 	public int getMaxEggs() {return plugin.getConfig().getInt("item.egg.amount");}
+	
 	public int getPowerUpSpawnTimer() {return plugin.getConfig().getInt("item.powerup.timer");}
+	public int getPowerUpCheckTimer() {return plugin.getConfig().getInt("item.powerup.check");}
+	public int getPowerUpStayTimer() {return plugin.getConfig().getInt("item.powerup.stay");}
+	public double getPowerUpProbability() {return plugin.getConfig().getDouble("item.powerup.probability", 0.1D);}
+	public double getPowerUpGrowth() {return plugin.getConfig().getDouble("item.powerup.growth", 0.1D);}
 	
 	public String getKnockbackStickName() {return plugin.getConfig().getString("item.stick.name");}
 	public String getKnockbackStickDescription() {return plugin.getConfig().getString("item.stick.description");}
