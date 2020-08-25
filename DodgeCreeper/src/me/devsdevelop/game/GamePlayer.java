@@ -1,11 +1,15 @@
 package me.devsdevelop.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.devsdevelop.DodgeCreeper;
+import me.devsdevelop.powerup.PowerUp;
+import me.devsdevelop.powerup.items.PowerUpItem;
 
 
 public class GamePlayer{
@@ -15,6 +19,7 @@ public class GamePlayer{
 	private PlayerProfile profile;
 	private PlayerTeam playerTeam;
 	private Location spawnPoint;
+	private List<GamePlayerCooldown> cooldowns = new ArrayList<GamePlayerCooldown>();
 	private boolean inArena;
 	
 	 public GamePlayer(Player player, PlayerProfile profile, PlayerTeam playerTeam, DodgeCreeper plugin) {
@@ -27,6 +32,7 @@ public class GamePlayer{
 	    this.playerTeam = playerTeam;
 	    this.inArena = false;
 	    this.spawnPoint = generateSpawnPoint();
+	    
 	 }
 	public Player getPlayer() {
 		return player;
@@ -46,6 +52,48 @@ public class GamePlayer{
 	public void teleportGamePlayer() {
 		player.teleport(spawnPoint);
 	}
+	
+	public void addGamePlayerCooldown(PowerUpItem powerUpItem, double time) { // called by PowerUpItemManager
+		GamePlayerCooldown cooldown = hasPowerUp(powerUpItem.getPowerUp());
+		
+		if (cooldown == null) { // if a new powerUp is obtained, add it to the list of the players powerUps
+			cooldowns.add(new GamePlayerCooldown(powerUpItem, time));
+			return;
+		}
+		cooldown.setCooldown(cooldown.getCooldown() + time); // if the same powerUp is obtained, extend the timer.
+	}
+	
+	public void subtractCooldowns(double ticks) { //called by PowerUpManager, repeats every so often through the PowerUpScheduler.
+		if (cooldowns.isEmpty()) {
+			return;
+		}		
+		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
+			gamePlayerCooldown.reduceCooldownByAmount(ticks);
+		}
+		removeInactiveCooldowns();
+	}
+	
+	private GamePlayerCooldown hasPowerUp(PowerUp powerUp) {
+		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
+			if (gamePlayerCooldown.getPowerUpItem().getPowerUp().equals(powerUp)) 
+				return gamePlayerCooldown;		
+		}
+		return null;
+	}
+	
+	private void removeInactiveCooldowns() { // called by substractCooldowns()
+		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
+			if (!gamePlayerCooldown.hasCooldown()) { // if there is no cooldown left, remove it.
+				PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
+				powerUpItem.setActive(false);
+				powerUpItem.removePowerUp(player); 
+				cooldowns.remove(gamePlayerCooldown);
+				break;
+			}
+		}
+	
+	}
+	
 	private Location generateSpawnPoint() {
 		return plugin.getConfigClass().getArenaPlayerLocation(this);
 	}

@@ -51,11 +51,11 @@ public class PowerUpScheduler {
 	      //warmup,interval
 	     scheduleIds.add(taskId);
 	}
-	public void powerUpCheckScheduler(BukkitScheduler scheduler, long initTimer, long timer) {
+	public void powerUpCheckScheduler(BukkitScheduler scheduler, long initTimer, final long timer) {
 		int taskId = scheduler.scheduleSyncRepeatingTask(plugin, new Runnable(){
 	        @Override
 	        public void run(){ 
-	        	powerUpManager.checkCollectedPowerUps();
+	        	powerUpManager.checkCollectedPowerUps((double)timer);
 	        }
 	     }, initTimer, timer); 
 	    

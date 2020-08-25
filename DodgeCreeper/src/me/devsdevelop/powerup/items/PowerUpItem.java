@@ -17,6 +17,7 @@ public abstract class PowerUpItem extends ItemStack{
 	
 	private PowerUp powerUp;
 	private String displayName;
+	private boolean isActive = false;
 	
 	public PowerUpItem(PowerUp powerUp, Material material, int amount, String displayName) {
 		super(material, amount);
@@ -29,9 +30,18 @@ public abstract class PowerUpItem extends ItemStack{
 	}
 	
 	abstract public void activatePowerUp(Player player);
+	abstract public void removePowerUp(Player player);
 	
 	public PowerUp getPowerUp() {
 		return powerUp;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	
+	public void setActive(boolean value) {
+		isActive = value;
 	}
 	
 	private void setCustomModelId(int customModelData) {

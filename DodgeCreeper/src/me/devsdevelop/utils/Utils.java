@@ -54,6 +54,8 @@ public class Utils {
 			meta.setColor(Color.BLUE);
 		else if (colorName.equalsIgnoreCase("red"))
 			meta.setColor(Color.RED);
+		else if (colorName.equalsIgnoreCase("yellow"))
+			meta.setColor(Color.YELLOW);
 		item.setItemMeta(meta);
 		return item;
 		

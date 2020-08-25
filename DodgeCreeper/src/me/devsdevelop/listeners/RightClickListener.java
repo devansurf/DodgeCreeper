@@ -1,14 +1,13 @@
 package me.devsdevelop.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.devsdevelop.DodgeCreeper;
-import me.devsdevelop.powerup.items.PowerUpItem;
 
 public class RightClickListener implements Listener {
 	
@@ -25,13 +24,12 @@ public class RightClickListener implements Listener {
         if (plugin.getGameManager().gameStarted) {
             if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) 
             		&& player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
-                plugin.getPowerUpItemManager().activateItemPowerUp(player.getInventory().getItemInMainHand(), player);   
-               // calling PowerUpItemManager to sort what item ability to activate, using rigorous if statements
+            	ItemStack item = player.getInventory().getItemInMainHand();
+            	item.setAmount(1);
+                plugin.getPowerUpItemManager().activateItemPowerUp(item, player);
+                player.getInventory().removeItem(item);
+                event.setCancelled(true); 
             }
-        }
-        else {
-        	Bukkit.broadcastMessage("Game has not started");
-        }
-        
+        }        
     }
 }

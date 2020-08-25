@@ -27,20 +27,19 @@ public class GameManager {
 	private List<CustomCreeper> creepers = new ArrayList<CustomCreeper>();
 
 	public boolean gameStarted = false;
-	
 	public GameManager(DodgeCreeper plugin) {
 		this.plugin = plugin;
 		worldData = new WorldData(plugin);
 		createTeams();
 	}
 	public void StartGame(Player player) { // the parameter player serves more for providing messages than anything else.
+		checkBuildArena(player);
 		if (gamePlayers.size() < 1) {
 			addAllPlayers();
 		}	
 
 		gameStarted = true;
-		creepers.clear();
-		checkBuildArena(player);
+		creepers.clear();	
 		setGameRules(player);
 		removeAllEntitiesFromWorld(player); // dangerous if the world is used for other things
 		setupGamePlayers();
@@ -51,6 +50,7 @@ public class GameManager {
 	public void clearGame() {
 	
 		gameStarted = false;
+		plugin.getPowerUpManager().removeAllPowerUps();
 		plugin.getEggsScheduler().stopSchedulers();
 		plugin.getPowerUpScheduler().stopSchedulers();
 		gamePlayers.clear();
@@ -231,6 +231,8 @@ public class GameManager {
     			player.getInventory().addItem(Utils.createKnockbackStick(plugin.getConfigClass())); // knockback Sticks
     			player.getInventory().addItem(Utils.createKnockbackStickTwo(plugin.getConfigClass())); 
     			player.getInventory().setArmorContents(armor); // equips armor to the player
+    			player.setSaturation(0f);
+    			player.setFoodLevel(16);
     			player.updateInventory();  //update inventory for items to take effect
     		}
     	}
@@ -256,8 +258,6 @@ public class GameManager {
 
 	private boolean checkBuildArena(Player player) {
 		if (!plugin.getDataManager().hasArena() || worldData.worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
-			Bukkit.broadcastMessage("getArena is: " + plugin.getDataManager().hasArena());
-			Bukkit.broadcastMessage("worldChanged is: " + worldData.worldChanged(player));
 			createArena(player);
 			return true;
 		}

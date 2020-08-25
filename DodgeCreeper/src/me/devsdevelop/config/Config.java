@@ -105,6 +105,7 @@ public class Config {
 	public int getPowerUpSpawnTimer() {return plugin.getConfig().getInt("item.powerup.timer");}
 	public int getPowerUpCheckTimer() {return plugin.getConfig().getInt("item.powerup.check");}
 	public int getPowerUpStayTimer() {return plugin.getConfig().getInt("item.powerup.stay");}
+	public double getPowerUpCooldown() {return plugin.getConfig().getDouble("item.powerup.cooldown", 200D);}
 	public double getPowerUpProbability() {return plugin.getConfig().getDouble("item.powerup.probability", 0.1D);}
 	public double getPowerUpGrowth() {return plugin.getConfig().getDouble("item.powerup.growth", 0.1D);}
 	
@@ -114,5 +115,6 @@ public class Config {
 	public String getVerticalAxis() {return plugin.getConfig().getString("BArena.verticalaxis");}
 	public String getMiddleLineBlock() {return plugin.getConfig().getString("BArena.middlelineblock");}
 	
+	public boolean getMiddleLineInvert() {return plugin.getConfig().getBoolean("BArena.middlelineinvert");}
 	
 }

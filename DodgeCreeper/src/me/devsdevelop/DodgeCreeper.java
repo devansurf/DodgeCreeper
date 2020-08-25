@@ -48,7 +48,6 @@ public class DodgeCreeper extends JavaPlugin{
 	@Override
 	public void onDisable() {
 		gameManager.clearGame();
-		powerUpManager.removeAllPowerUps();
 	}
 	
 	private void LoadConfigs() {
@@ -85,7 +84,7 @@ public class DodgeCreeper extends JavaPlugin{
 		gameManager = new GameManager(this);
 		schematicManager = new SchematicManager(this);
 		powerUpManager = new PowerUpManager(this);
-		powerUpItemManager = new PowerUpItemManager();
+		powerUpItemManager = new PowerUpItemManager(this);
 		
 	}
 	

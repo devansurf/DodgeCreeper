@@ -10,7 +10,7 @@ import me.devsdevelop.powerup.items.SpeedPU;
 
 
 public enum PowerUp {
-	CANNON(Material.GREEN_STAINED_GLASS, 1),
+	//CANNON(Material.GREEN_STAINED_GLASS, 1),
 	HEALTH (Material.PINK_STAINED_GLASS, 2),
 	INVISIBLE(Material.LIGHT_BLUE_STAINED_GLASS, 3),
 	INVULNERABLE(Material.WHITE_STAINED_GLASS, 4),
