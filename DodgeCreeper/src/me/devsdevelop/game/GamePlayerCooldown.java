@@ -1,6 +1,5 @@
 package me.devsdevelop.game;
 
-
 import me.devsdevelop.powerup.items.PowerUpItem;
 
 public class GamePlayerCooldown {
