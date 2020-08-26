@@ -55,17 +55,17 @@ item:
   egg:
     amount: 5
   powerup:
-    // timer represents the amount of opportunities to call the probability to spawn. (in ticks)
+# timer represents the amount of opportunities to call the probability to spawn. (in ticks)
     timer: 200
-    // check represents the interval (in ticks) that the game checks whether a player is standing on a powerUp
+# check represents the interval (in ticks) that the game checks whether a player is standing on a powerUp
     check: 5
-    // Stay represents the duration that a powerUp stays available. (in ticks)
+# Stay represents the duration that a powerUp stays available. (in ticks)
     stay: 140
-    // Cooldown represents the duration of the powerUp
+# Cooldown represents the duration of the powerUp
     cooldown: 200.0
-    // probability represents the chance of a powerUp spawning, the value 1 being 100%
+# probability represents the chance of a powerUp spawning, the value 1 being 100%
     probability: 0.10
-    // Growth represents the increment of probability for each failed call.
+# Growth represents the increment of probability for each failed call.
     growth: 0.10  
     
 block:
