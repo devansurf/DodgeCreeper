@@ -1,9 +1,10 @@
-# DodgeCreeper v.1.0.0
+# DodgeCreeper v.2.0.1
 ---
 /----------Objective----------/
 ---
 ```
 Whack a creeper to the opponents side of the arena and wreck havoc.
+Collect Power Ups to create an advantage over the enemy team!
 First team to eliminate the other team wins!
 ```
 /----------Commands----------/
