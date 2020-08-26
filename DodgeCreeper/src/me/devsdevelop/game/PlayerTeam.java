@@ -3,7 +3,11 @@ package me.devsdevelop.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import me.devsdevelop.utils.Utils;
 
 
 
@@ -42,6 +46,13 @@ public class PlayerTeam {
 		teamMembers.clear();
 	}
 	
+	public ItemStack[] getTeamArmor(int enchantLevel) {
+		return new ItemStack[] {Utils.createCustomArmor(Material.LEATHER_BOOTS, teamColor.toString(), enchantLevel), 
+								Utils.createCustomArmor(Material.LEATHER_LEGGINGS, teamColor.toString(), enchantLevel),
+								Utils.createCustomArmor(Material.LEATHER_CHESTPLATE, teamColor.toString(), enchantLevel),
+								Utils.createCustomArmor(Material.LEATHER_HELMET, teamColor.toString(), enchantLevel)};
+		
+	}
 
 	
 }

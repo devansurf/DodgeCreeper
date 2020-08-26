@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import me.devsdevelop.DodgeCreeper;
 
@@ -69,18 +70,27 @@ public class DataManager {
 		getConfig().set("world.arena.z", z);
 		saveConfig();
 	}
-	public Location getArenaLocation(Player player) {
-		Location loc = new Location(player.getWorld(), 
+	public Location getArenaLocation() {
+		Location loc = new Location(getWorld(), 
 				getConfig().getInt("world.arena.x"),
 				getConfig().getInt("world.arena.y"),
 				getConfig().getInt("world.arena.z"));
 		return loc;
 	}
-	public void setWorldUID(String UID) {getConfig().set("world.uuid", UID);saveConfig();}
-	public String getWorldUID() {return getConfig().getString("world.uuid");}
 	
-	public void setArena(Boolean value) {getConfig().set("world.arena.value", value);saveConfig();}
-	public boolean getArena() {return getConfig().getBoolean("world.arena.value");}
+
+	public void setWorldUID(String UID) {
+		getConfig().set("world.uuid", UID);
+		saveConfig();
+	}
+	public String getWorldUID() {return getConfig().getString("world.uuid");}
+	public World getWorld() {return Bukkit.getServer().getWorld(UUID.fromString(getWorldUID()));}
+	
+	public void setArena(Boolean value) {
+		getConfig().set("world.arena.value", value);
+		saveConfig();
+		}
+	public boolean hasArena() {return getConfig().getBoolean("world.arena.value");}
 	
 	
 		

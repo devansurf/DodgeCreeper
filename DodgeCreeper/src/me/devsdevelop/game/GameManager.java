@@ -6,7 +6,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,42 +16,46 @@ import me.devsdevelop.creepers.CustomCreeper;
 import me.devsdevelop.utils.Utils;
 import me.devsdevelop.utils.sound.SoundManager;
 import me.devsdevelop.utils.sound.SoundType;
+import me.devsdevelop.world.WorldData;
 
 public class GameManager {
 
 	private DodgeCreeper plugin;
+	private WorldData worldData;
 	private List<PlayerTeam> playerTeams = new ArrayList<PlayerTeam>();
 	private List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 	private List<CustomCreeper> creepers = new ArrayList<CustomCreeper>();
 
 	public boolean gameStarted = false;
-	
 	public GameManager(DodgeCreeper plugin) {
 		this.plugin = plugin;
+		worldData = new WorldData(plugin);
 		createTeams();
 	}
 	public void StartGame(Player player) { // the parameter player serves more for providing messages than anything else.
-		if (gamePlayers.size() < 1) {
-			player.sendMessage(Utils.chat("&cThere are an insufficient amount of players to start the game, use /dc add <player> to add players"));
-			return;
-		}
 		
+		checkBuildArena(player);
+		clearPowerUps();
+		stopSchedulers();
+		
+		if (gamePlayers.size() < 1) {
+			addAllPlayers();
+		}	
 
 		gameStarted = true;
-		creepers.clear();
-		checkBuildArena(player);
+		creepers.clear();	
 		setGameRules(player);
 		removeAllEntitiesFromWorld(player); // dangerous if the world is used for other things
 		setupGamePlayers();
 		giveGamePlayerItems();
-		
-		plugin.getEggsScheduler().initializeSchedulers();
+		initializeSchedulers();
 		// give player armor, items, spawn points, team, and teleport them.
 	}
 	public void clearGame() {
 	
 		gameStarted = false;
-		plugin.getEggsScheduler().stopSchedulers();
+		clearPowerUps();
+		stopSchedulers();
 		gamePlayers.clear();
 		creepers.clear();
 		for (PlayerTeam playerTeam : playerTeams) {
@@ -119,13 +122,13 @@ public class GameManager {
 	}
 	
 	public void createArena(Player player) {
-		if (plugin.getDataManager().getArena() && !worldChanged(player)) { //if attempting to create arena while an arena already exists
+		if (plugin.getDataManager().hasArena() && !worldData.worldChanged(player)) { //if attempting to create arena while an arena already exists
 			player.sendMessage(Utils.chat("&cArena has already been built in this world"));
 			return;
 		}	
 		
 		if(plugin.getSchematicManager().loadSchematic(player)) { // succesfully loaded the arena
-			setWorldData(player);
+			worldData.setWorldData(player);
 			player.sendMessage(Utils.chat("&eArena has been successfully created"));
 		}
 		else {
@@ -155,7 +158,9 @@ public class GameManager {
 	public ArrayList<PlayerTeam> getPlayerTeams() {
 		return (ArrayList<PlayerTeam>) playerTeams;
 	}
-	
+	public ArrayList<GamePlayer> getGamePlayers() {
+		return (ArrayList<GamePlayer>) gamePlayers;
+	}
 	public int getTotalPlayers() {
 		return gamePlayers.size();
 	}
@@ -219,19 +224,34 @@ public class GameManager {
     
     private void giveGamePlayerItems() {
     	for (PlayerTeam playerTeam : playerTeams) {   	
-    		ItemStack[] armor = {Utils.createCustomArmor(Material.LEATHER_BOOTS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
-        					 	 Utils.createCustomArmor(Material.LEATHER_LEGGINGS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()),
-      /*Armor for each team*/	 Utils.createCustomArmor(Material.LEATHER_CHESTPLATE, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
-        					 	 Utils.createCustomArmor(Material.LEATHER_HELMET, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel())};
+    		ItemStack[] armor = playerTeam.getTeamArmor(plugin.getConfigClass().getArmorLevel());
   
     		for (Player player : playerTeam.getTeamMembers()) {
     			player.getInventory().clear(); // clear the inventory before adding items.
     			player.getInventory().addItem(Utils.createKnockbackStick(plugin.getConfigClass())); // knockback Sticks
+    			player.getInventory().addItem(Utils.createKnockbackStickTwo(plugin.getConfigClass())); 
     			player.getInventory().setArmorContents(armor); // equips armor to the player
+    			player.setSaturation(0f);
+    			player.setFoodLevel(16);
     			player.updateInventory();  //update inventory for items to take effect
     		}
     	}
     }
+    
+    private void initializeSchedulers() {
+    	plugin.getEggsScheduler().initializeSchedulers();
+    	plugin.getPowerUpScheduler().initializeSchedulers();
+    }
+    
+    private void stopSchedulers() {
+		plugin.getEggsScheduler().stopSchedulers();
+		plugin.getPowerUpScheduler().stopSchedulers();
+    }
+    
+    private void clearPowerUps() {
+    	plugin.getPowerUpManager().removeAllPowerUps();
+    }
+    
 	private void removeAllEntitiesFromWorld(Player player) {
 
         for(Entity en : player.getWorld().getEntities()){
@@ -244,29 +264,9 @@ public class GameManager {
 		player.getWorld().setGameRule(GameRule.MOB_GRIEFING, false);
 	}
 	
-	private void setWorldData(Player player) { // save arena location, and unique world id.
-		String worldId = player.getWorld().getUID().toString();
-		Location arenaLoc = plugin.getSchematicManager().getLocation();
-		plugin.getDataManager().setWorldUID(worldId); // set world id
-		plugin.getDataManager().setArena(true); // set arena to true
-		plugin.getDataManager().setArenaLocation(arenaLoc.getBlockX(), arenaLoc.getBlockY(),(arenaLoc.getBlockZ()));
 
-		
-	}
-	private boolean worldChanged(Player player) {
-		String worldId = player.getWorld().getUID().toString();
-		if (plugin.getDataManager().getConfig().contains("world.uuid")) { // if the path exists for worldId
-			if (plugin.getDataManager().getWorldUID().equals(worldId)) { //check if this world is the same as the saved one. 
-				return false;
-			}
-			plugin.getDataManager().setArena(false);
-		}
-		return true;
-	}
 	private boolean checkBuildArena(Player player) {
-		if (!plugin.getDataManager().getArena() || worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
-			Bukkit.broadcastMessage("getArena is: " + plugin.getDataManager().getArena());
-			Bukkit.broadcastMessage("worldChanged is: " + worldChanged(player));
+		if (!plugin.getDataManager().hasArena() || worldData.worldChanged(player)) { // if an arena does not exist or if the worlds changed, then create a new arena
 			createArena(player);
 			return true;
 		}

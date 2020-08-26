@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -34,6 +33,19 @@ public class Utils {
 		stick.setItemMeta(stickMeta);
 		return stick;
 	}
+	public static ItemStack createKnockbackStickTwo(Config config) { // TO BE CHANGED LATER
+		
+		List<String> lore = new ArrayList<String>();
+		
+		ItemStack stick = new ItemStack(Material.STICK);
+		ItemMeta stickMeta = stick.getItemMeta();
+		stickMeta.addEnchant(Enchantment.KNOCKBACK, config.getKnockbackStickValue()/2, true);
+		stickMeta.setDisplayName(config.getKnockbackStickName());
+		lore.add(config.getKnockbackStickDescription());
+		stickMeta.setLore(lore);
+		stick.setItemMeta(stickMeta);
+		return stick;
+	}
 	public static ItemStack createCustomArmor(Material leatherPiece, String colorName, int enchantLevel) {
 		ItemStack item = new ItemStack(leatherPiece);
 		LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
@@ -42,6 +54,8 @@ public class Utils {
 			meta.setColor(Color.BLUE);
 		else if (colorName.equalsIgnoreCase("red"))
 			meta.setColor(Color.RED);
+		else if (colorName.equalsIgnoreCase("yellow"))
+			meta.setColor(Color.YELLOW);
 		item.setItemMeta(meta);
 		return item;
 		

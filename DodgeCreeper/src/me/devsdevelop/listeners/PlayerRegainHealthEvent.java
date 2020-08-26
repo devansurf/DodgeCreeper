@@ -7,6 +7,6 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 public class PlayerRegainHealthEvent implements Listener{
 	@EventHandler
 	public void onPlayerRegenerate(EntityRegainHealthEvent event) {
-		event.setCancelled(true);
+		//event.setCancelled(true);
 	}
 }

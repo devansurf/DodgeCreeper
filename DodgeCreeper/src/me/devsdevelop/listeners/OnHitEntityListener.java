@@ -32,6 +32,7 @@ private DodgeCreeper plugin;
 				if (player.getInventory().getItemInMainHand().getType() == Material.STICK){ // if creeper got hit by a stick
 					creeper.ignite();	 // doesn't matter if it gets re-ignited	
 					plugin.getGameManager().getCreepers().remove(creeper);
+					return;
 				}		
 			}
 			

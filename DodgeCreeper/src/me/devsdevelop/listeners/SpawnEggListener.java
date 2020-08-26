@@ -34,7 +34,9 @@ public class SpawnEggListener implements Listener{
 	public void onPlaceSpawnEgg(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		GameManager gameManager = plugin.getGameManager();
-		
+		if (player.getInventory().getItemInMainHand() == null) {
+			return;
+		}
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK  // if right clicked block
 		&& player.getInventory().getItemInMainHand().getType().equals(Material.CREEPER_SPAWN_EGG)) { // while holding creeper spawn egg
 			if (!gameManager.gameStarted) { // Cancel any creeper spawns if game hasn't started
