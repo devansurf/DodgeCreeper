@@ -1,4 +1,4 @@
-#DodgeCreeper v1.0.0
+#DodgeCreeper v2.0.2
 
 #Coordinates of interior corners of the arena relative the the spawning location of the arena.
 #Values obtained by the difference of arenalocation-cornerlocation
@@ -32,7 +32,7 @@ BArena:
 #The middle line represents the number of blocks from a corner to the middle in respect with the vertical axis of the arena.
   middleline: -40
   middlelineblock: BLACK_CONCRETE
-  
+  middlelineinvert: false
 creeper:
   chargedcreeper:
     tick: 30
@@ -44,6 +44,7 @@ creeper:
     eggtimer: 80
     amount: 1
     
+#The formula for calculating the probability of a powerUp spawn is probability + (growth * retrys)
 item:
   stick:
     knockback: 13
@@ -53,5 +54,19 @@ item:
     enchant: 5
   egg:
     amount: 5
+  powerup:
+# timer represents the amount of opportunities to call the probability to spawn. (in ticks)
+    timer: 200
+# check represents the interval (in ticks) that the game checks whether a player is standing on a powerUp
+    check: 5
+# Stay represents the duration that a powerUp stays available. (in ticks)
+    stay: 140
+# Cooldown represents the duration of the powerUp
+    cooldown: 200
+# probability represents the chance of a powerUp spawning, the value 1 being 100%
+    probability: 0.10
+# Growth represents the increment of probability for each failed call.
+    growth: 0.10  
+    
 block:
   creeperspawn: BEDROCK
