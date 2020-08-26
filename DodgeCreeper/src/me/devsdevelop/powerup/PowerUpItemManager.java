@@ -28,7 +28,7 @@ public class PowerUpItemManager {
 		powerUpList.add (new SpeedPU(PowerUp.SPEED,1));
 	}
 	
-	public void activateItemPowerUp(ItemStack item, Player player) { // called by RightClickListener
+	public void activateItemPowerUp(ItemStack item, Player player) { // called by PlayerInteractEvent
 		
 		ItemMeta itemMeta = item.getItemMeta();
 		for (PowerUpItem powerUpItem : powerUpList) { // search through existing powerUps

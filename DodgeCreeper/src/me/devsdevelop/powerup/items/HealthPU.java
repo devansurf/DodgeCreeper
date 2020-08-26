@@ -25,7 +25,7 @@ public class HealthPU extends PowerUpItem{
 
 	@Override
 	public void removePowerUp(Player player) {
-		player.sendMessage(Utils.chat("&7=== &aYour &cHealth Regeneration &afades away... &7==="));
+		player.sendMessage(Utils.chat("&7=== &4Your &cHealth Regeneration &4fades away... &7==="));
 		player.removePotionEffect(PotionEffectType.REGENERATION);
 	}
 }

@@ -65,7 +65,7 @@ public class PowerUpManager {
 		 for (GamePlayer gamePlayer : gamePlayers) {
 			 
 			 gamePlayer.subtractCooldowns(ticks); //any existing cooldowns are subtracted over time, and also removed if needed.
-			 
+			 gamePlayer.removeInactiveCooldowns();
 			 for (int i = 0; i < powerUpBlocks.size(); i++) {
 				 
 				 Player player = gamePlayer.getPlayer();

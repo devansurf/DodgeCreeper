@@ -70,7 +70,19 @@ public class GamePlayer{
 		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
 			gamePlayerCooldown.reduceCooldownByAmount(ticks);
 		}
-		removeInactiveCooldowns();
+	}
+	
+	public void removeInactiveCooldowns() { 	// called right after substractCooldowns is called. 
+		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
+			if (!gamePlayerCooldown.hasCooldown()) { 	// if there is no cooldown left, remove it.
+				PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
+				powerUpItem.setActive(false);
+				powerUpItem.removePowerUp(player); 
+				cooldowns.remove(gamePlayerCooldown);
+				break; 	/* break to prevent looping between null values. 2 powerUps can't be collected at same time, 
+						  therefore to continue looping would be unnecessary. */
+			}
+		}
 	}
 	
 	private GamePlayerCooldown hasPowerUp(PowerUp powerUp) {
@@ -81,18 +93,7 @@ public class GamePlayer{
 		return null;
 	}
 	
-	private void removeInactiveCooldowns() { // called by substractCooldowns()
-		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
-			if (!gamePlayerCooldown.hasCooldown()) { // if there is no cooldown left, remove it.
-				PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
-				powerUpItem.setActive(false);
-				powerUpItem.removePowerUp(player); 
-				cooldowns.remove(gamePlayerCooldown);
-				break;
-			}
-		}
-	
-	}
+
 	
 	private Location generateSpawnPoint() {
 		return plugin.getConfigClass().getArenaPlayerLocation(this);

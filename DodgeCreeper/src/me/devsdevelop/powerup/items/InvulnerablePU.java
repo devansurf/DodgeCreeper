@@ -19,7 +19,7 @@ public class InvulnerablePU extends PowerUpItem{
 	@Override
 	public void activatePowerUp(Player player) {
 		if (!super.isActive()) {
-			player.sendMessage(Utils.chat("&7===&aActivated &fInvulnerability&7==="));
+			player.sendMessage(Utils.chat("&7=== &aActivated &fInvulnerability &7==="));
 			armorContents = player.getInventory().getArmorContents();
 			player.getInventory().setArmorContents(new ItemStack[] {Utils.createCustomArmor(Material.LEATHER_BOOTS, "yellow", 0), 
 				 	 Utils.createCustomArmor(Material.LEATHER_LEGGINGS, "yellow", 0),
@@ -31,7 +31,7 @@ public class InvulnerablePU extends PowerUpItem{
 
 	@Override
 	public void removePowerUp(Player player) {
-		player.sendMessage(Utils.chat("&7=== &aYour skin turns soft, you no longer possess the power of bedrock. &7==="));
+		player.sendMessage(Utils.chat("&7=== &4Your skin turns soft, you no longer possess the power of bedrock. &7==="));
 		player.getInventory().setArmorContents(armorContents); // gives the players armor back.
 		player.setInvulnerable(false);
 	}

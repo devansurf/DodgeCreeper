@@ -31,7 +31,7 @@ public class InvisiblePU extends PowerUpItem{
 
 	@Override
 	public void removePowerUp(Player player) {
-		player.sendMessage(Utils.chat("&7=== &aYou no longer reflect light, you are now visible. &7==="));
+		player.sendMessage(Utils.chat("&7=== &4You no longer reflect light, you are now visible. &7==="));
 		player.getInventory().setArmorContents(armorContents); // gives the players armor back.
 		player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 		player.removePotionEffect(PotionEffectType.INVISIBILITY);

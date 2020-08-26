@@ -102,7 +102,7 @@ public class Config {
 	
 	public int getMaxEggs() {return plugin.getConfig().getInt("item.egg.amount");}
 	
-	public int getPowerUpSpawnTimer() {return plugin.getConfig().getInt("item.powerup.timer");}
+	public int getPowerUpSpawnTimer() {return plugin.getConfig().getInt("item.powerup.timer",200);}
 	public int getPowerUpCheckTimer() {return plugin.getConfig().getInt("item.powerup.check");}
 	public int getPowerUpStayTimer() {return plugin.getConfig().getInt("item.powerup.stay");}
 	public double getPowerUpCooldown() {return plugin.getConfig().getDouble("item.powerup.cooldown", 200D);}

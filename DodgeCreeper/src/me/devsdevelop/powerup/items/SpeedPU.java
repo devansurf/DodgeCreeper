@@ -18,14 +18,14 @@ public class SpeedPU extends PowerUpItem{
 	@Override
 	public void activatePowerUp(Player player) {
 		if (!super.isActive()) {
-			player.sendMessage(Utils.chat("&7===&aActivated &eSpeed Boost&7==="));
+			player.sendMessage(Utils.chat("&7=== &aActivated &eSpeed Boost&7 ==="));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 9));
 		}
 	}
 
 	@Override
 	public void removePowerUp(Player player) {
-		player.sendMessage(Utils.chat("&7=== &aYour legs start to feel heavy... &7==="));
+		player.sendMessage(Utils.chat("&7=== &4Your legs start to feel heavy... &7==="));
 		player.removePotionEffect(PotionEffectType.SPEED);
 		
 	}
