@@ -1,19 +1,16 @@
 package me.devsdevelop.commands;
 
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.devsdevelop.DodgeCreeper;
-import me.devsdevelop.powerup.PowerUpBlockGroup;
 import me.devsdevelop.utils.Utils;
 
 public class GameCommand implements CommandExecutor{
 	
 	private DodgeCreeper plugin;
-	private PowerUpBlockGroup beacon;
 	public GameCommand(DodgeCreeper plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("dc").setExecutor(this);

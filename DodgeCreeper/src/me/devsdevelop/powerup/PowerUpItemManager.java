@@ -36,7 +36,7 @@ public class PowerUpItemManager {
 				powerUpItem.activatePowerUp(player);	// calls the function specific to the powerUp
 				powerUpItem.setActive(true); // set the powerUpItems state to active
 				plugin.getGameManager().getGamePlayerFromPlayer(player).
-					addGamePlayerCooldown(powerUpItem, plugin.getConfigClass().getPowerUpCooldown()); // add the powerUp Cooldown. calls GamePlayer
+					addGamePlayerCooldown(powerUpItem, (long)plugin.getConfigClass().getPowerUpCooldown()); // add the powerUp Cooldown. calls GamePlayer
 				return;
 			}
 		}

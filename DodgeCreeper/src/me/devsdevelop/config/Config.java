@@ -105,7 +105,7 @@ public class Config {
 	public int getPowerUpSpawnTimer() {return plugin.getConfig().getInt("item.powerup.timer",200);}
 	public int getPowerUpCheckTimer() {return plugin.getConfig().getInt("item.powerup.check");}
 	public int getPowerUpStayTimer() {return plugin.getConfig().getInt("item.powerup.stay");}
-	public double getPowerUpCooldown() {return plugin.getConfig().getDouble("item.powerup.cooldown", 200D);}
+	public int getPowerUpCooldown() {return plugin.getConfig().getInt("item.powerup.cooldown", 200);}
 	public double getPowerUpProbability() {return plugin.getConfig().getDouble("item.powerup.probability", 0.1D);}
 	public double getPowerUpGrowth() {return plugin.getConfig().getDouble("item.powerup.growth", 0.1D);}
 	

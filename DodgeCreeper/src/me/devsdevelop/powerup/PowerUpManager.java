@@ -55,13 +55,9 @@ public class PowerUpManager {
 		
 	}
 	
-	public void checkCollectedPowerUps(double ticks) {
+	public void checkCollectedPowerUps(long ticks) {
 
-		 ArrayList<GamePlayer> gamePlayers = plugin.getGameManager().getGamePlayers();
-		 if (powerUpBlocks.isEmpty()) {
-			 return;
-		 }
-		 
+		 ArrayList<GamePlayer> gamePlayers = plugin.getGameManager().getGamePlayers();		 
 		 for (GamePlayer gamePlayer : gamePlayers) {
 			 
 			 gamePlayer.subtractCooldowns(ticks); //any existing cooldowns are subtracted over time, and also removed if needed.
@@ -89,7 +85,13 @@ public class PowerUpManager {
 	
 	public void removeAllPowerUps() {
 		for (PowerUpBlockGroup powerUpBlockGroup : powerUpBlocks) {
-			powerUpBlockGroup.revertBlockGroup();
+			if (powerUpBlockGroup.isGenerated())
+				powerUpBlockGroup.revertBlockGroup();
+		}
+		
+		ArrayList<GamePlayer> gamePlayers = plugin.getGameManager().getGamePlayers();
+		for (GamePlayer gamePlayer : gamePlayers) {
+			gamePlayer.removeCooldowns();
 		}
 	}
 	

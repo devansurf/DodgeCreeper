@@ -55,7 +55,7 @@ public class PowerUpScheduler {
 		int taskId = scheduler.scheduleSyncRepeatingTask(plugin, new Runnable(){
 	        @Override
 	        public void run(){ 
-	        	powerUpManager.checkCollectedPowerUps((double)timer);
+	        	powerUpManager.checkCollectedPowerUps((long)timer);
 	        }
 	     }, initTimer, timer); 
 	    

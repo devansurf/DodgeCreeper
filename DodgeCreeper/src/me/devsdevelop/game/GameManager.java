@@ -33,7 +33,11 @@ public class GameManager {
 		createTeams();
 	}
 	public void StartGame(Player player) { // the parameter player serves more for providing messages than anything else.
+		
 		checkBuildArena(player);
+		clearPowerUps();
+		stopSchedulers();
+		
 		if (gamePlayers.size() < 1) {
 			addAllPlayers();
 		}	
@@ -50,9 +54,8 @@ public class GameManager {
 	public void clearGame() {
 	
 		gameStarted = false;
-		plugin.getPowerUpManager().removeAllPowerUps();
-		plugin.getEggsScheduler().stopSchedulers();
-		plugin.getPowerUpScheduler().stopSchedulers();
+		clearPowerUps();
+		stopSchedulers();
 		gamePlayers.clear();
 		creepers.clear();
 		for (PlayerTeam playerTeam : playerTeams) {
@@ -221,10 +224,7 @@ public class GameManager {
     
     private void giveGamePlayerItems() {
     	for (PlayerTeam playerTeam : playerTeams) {   	
-    		ItemStack[] armor = {Utils.createCustomArmor(Material.LEATHER_BOOTS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
-        					 	 Utils.createCustomArmor(Material.LEATHER_LEGGINGS, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()),
-      /*Armor for each team*/	 Utils.createCustomArmor(Material.LEATHER_CHESTPLATE, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel()), 
-        					 	 Utils.createCustomArmor(Material.LEATHER_HELMET, playerTeam.getTeamColor().toString(), plugin.getConfigClass().getArmorLevel())};
+    		ItemStack[] armor = playerTeam.getTeamArmor(plugin.getConfigClass().getArmorLevel());
   
     		for (Player player : playerTeam.getTeamMembers()) {
     			player.getInventory().clear(); // clear the inventory before adding items.
@@ -241,6 +241,15 @@ public class GameManager {
     private void initializeSchedulers() {
     	plugin.getEggsScheduler().initializeSchedulers();
     	plugin.getPowerUpScheduler().initializeSchedulers();
+    }
+    
+    private void stopSchedulers() {
+		plugin.getEggsScheduler().stopSchedulers();
+		plugin.getPowerUpScheduler().stopSchedulers();
+    }
+    
+    private void clearPowerUps() {
+    	plugin.getPowerUpManager().removeAllPowerUps();
     }
     
 	private void removeAllEntitiesFromWorld(Player player) {

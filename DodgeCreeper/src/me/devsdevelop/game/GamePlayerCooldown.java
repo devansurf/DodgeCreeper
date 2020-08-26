@@ -1,22 +1,23 @@
 package me.devsdevelop.game;
 
+
 import me.devsdevelop.powerup.items.PowerUpItem;
 
 public class GamePlayerCooldown {
 
 	private PowerUpItem powerUpItem;
-	private double cooldownInTicks;
+	private long cooldownInTicks;
 	
-	public GamePlayerCooldown(PowerUpItem powerUpItem, double ticks) {
+	public GamePlayerCooldown(PowerUpItem powerUpItem, long ticks) {
 		this.powerUpItem = powerUpItem;
 		cooldownInTicks = ticks;
 	}
 	
-	public double getCooldown() {
+	public long getCooldown() {
 		return cooldownInTicks;
 	}
 	
-	public void setCooldown(double ticks) {
+	public void setCooldown(long ticks) {
 		cooldownInTicks = ticks;
 	}
 	
@@ -27,7 +28,7 @@ public class GamePlayerCooldown {
 		return true;
 	}
 	
-	public void reduceCooldownByAmount(double ticks) {
+	public void reduceCooldownByAmount(long ticks) {
 		cooldownInTicks -= ticks;
 	}
 	

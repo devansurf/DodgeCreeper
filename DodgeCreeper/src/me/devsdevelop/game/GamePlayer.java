@@ -53,7 +53,7 @@ public class GamePlayer{
 		player.teleport(spawnPoint);
 	}
 	
-	public void addGamePlayerCooldown(PowerUpItem powerUpItem, double time) { // called by PowerUpItemManager
+	public void addGamePlayerCooldown(PowerUpItem powerUpItem, long time) { // called by PowerUpItemManager
 		GamePlayerCooldown cooldown = hasPowerUp(powerUpItem.getPowerUp());
 		
 		if (cooldown == null) { // if a new powerUp is obtained, add it to the list of the players powerUps
@@ -63,7 +63,7 @@ public class GamePlayer{
 		cooldown.setCooldown(cooldown.getCooldown() + time); // if the same powerUp is obtained, extend the timer.
 	}
 	
-	public void subtractCooldowns(double ticks) { //called by PowerUpManager, repeats every so often through the PowerUpScheduler.
+	public void subtractCooldowns(long ticks) { //called by PowerUpManager, repeats every so often through the PowerUpScheduler.
 		if (cooldowns.isEmpty()) {
 			return;
 		}		
@@ -72,17 +72,32 @@ public class GamePlayer{
 		}
 	}
 	
-	public void removeInactiveCooldowns() { 	// called right after substractCooldowns is called. 
+	public void removeInactiveCooldowns() { 	// called right after substractCooldowns is called
+		if (cooldowns.isEmpty()) {
+			return;
+		}
 		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
 			if (!gamePlayerCooldown.hasCooldown()) { 	// if there is no cooldown left, remove it.
 				PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
 				powerUpItem.setActive(false);
 				powerUpItem.removePowerUp(player); 
 				cooldowns.remove(gamePlayerCooldown);
+				getPlayer().getInventory().setArmorContents(playerTeam.getTeamArmor(plugin.getConfigClass().getArmorLevel())); // when a powerUp is removed, make sure armor is set back.
 				break; 	/* break to prevent looping between null values. 2 powerUps can't be collected at same time, 
 						  therefore to continue looping would be unnecessary. */
 			}
 		}
+	}
+	public void removeCooldowns() {
+		if (cooldowns.isEmpty()) {
+			return;
+		}
+		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
+			PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
+			powerUpItem.setActive(false);
+			powerUpItem.removePowerUp(player); 	
+		}
+		cooldowns.clear();
 	}
 	
 	private GamePlayerCooldown hasPowerUp(PowerUp powerUp) {
