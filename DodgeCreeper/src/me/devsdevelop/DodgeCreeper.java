@@ -16,8 +16,7 @@ import me.devsdevelop.listeners.OnPlayerDamageListener;
 import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PlayerRegainHealthEvent;
 import me.devsdevelop.listeners.PressurePlateListener;
-import me.devsdevelop.listeners.RightClickListener;
-import me.devsdevelop.listeners.SpawnEggListener;
+import me.devsdevelop.listeners.PlayerInteractListener;
 import me.devsdevelop.powerup.PowerUpItemManager;
 import me.devsdevelop.powerup.PowerUpManager;
 import me.devsdevelop.schedulers.EggsScheduler;
@@ -60,7 +59,6 @@ public class DodgeCreeper extends JavaPlugin{
 	private void RegisterEvents() {
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new PressurePlateListener(this), this);
-		pm.registerEvents(new SpawnEggListener(this), this);
 		pm.registerEvents(new CreeperTargetListener(this), this);
 		pm.registerEvents(new OnHitEntityListener(this), this);
 		pm.registerEvents(new PlayerMoveListener(this), this);
@@ -69,7 +67,7 @@ public class DodgeCreeper extends JavaPlugin{
 		pm.registerEvents(new PlayerRegainHealthEvent(), this);
 		pm.registerEvents(new BlockBreakListener(this), this);
 		pm.registerEvents(new BlockPlaceListener(this), this);
-		pm.registerEvents(new RightClickListener(this), this);
+		pm.registerEvents(new PlayerInteractListener(this), this);
 	}
 	
 	private void EnableCommands() {

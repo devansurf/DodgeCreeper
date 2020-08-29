@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import me.devsdevelop.game.GamePlayer;
 import me.devsdevelop.powerup.PowerUp;
 import me.devsdevelop.utils.Utils;
 
@@ -15,8 +16,9 @@ public class HealthPU extends PowerUpItem{
 	}
 
 	@Override
-	public void activatePowerUp(Player player) {
+	public void activatePowerUp(GamePlayer gamePlayer) {
 		if (!super.isActive()) {
+			Player player = gamePlayer.getPlayer();
 			player.sendMessage(Utils.chat("&7=== &aActivated &cHealth Regeneration &7==="));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1)); // time in ticks, amplifier (starting at 0)
 		}
@@ -24,7 +26,8 @@ public class HealthPU extends PowerUpItem{
 	}
 
 	@Override
-	public void removePowerUp(Player player) {
+	public void removePowerUp(GamePlayer gamePlayer) {
+		Player player = gamePlayer.getPlayer();
 		player.sendMessage(Utils.chat("&7=== &4Your &cHealth Regeneration &4fades away... &7==="));
 		player.removePotionEffect(PotionEffectType.REGENERATION);
 	}

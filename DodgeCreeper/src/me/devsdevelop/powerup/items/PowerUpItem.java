@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import me.devsdevelop.game.GamePlayer;
 import me.devsdevelop.powerup.PowerUp;
 import me.devsdevelop.utils.Utils;
 
@@ -29,8 +29,8 @@ public abstract class PowerUpItem extends ItemStack{
 	
 	}
 	
-	abstract public void activatePowerUp(Player player);
-	abstract public void removePowerUp(Player player);
+	abstract public void activatePowerUp(GamePlayer gamePlayer);
+	abstract public void removePowerUp(GamePlayer gamePlayer);
 	
 	public PowerUp getPowerUp() {
 		return powerUp;

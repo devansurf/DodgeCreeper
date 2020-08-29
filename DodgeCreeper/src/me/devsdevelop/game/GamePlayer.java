@@ -20,7 +20,8 @@ public class GamePlayer{
 	private PlayerTeam playerTeam;
 	private Location spawnPoint;
 	private List<GamePlayerCooldown> cooldowns = new ArrayList<GamePlayerCooldown>();
-	private boolean inArena;
+	private boolean creeperCannonStatus = false;
+	private boolean inArena = false;
 	
 	 public GamePlayer(Player player, PlayerProfile profile, PlayerTeam playerTeam, DodgeCreeper plugin) {
 		this.plugin = plugin;
@@ -30,7 +31,6 @@ public class GamePlayer{
 	    this.profile = profile;
 	    this.profile.setUniqueId(uuid);
 	    this.playerTeam = playerTeam;
-	    this.inArena = false;
 	    this.spawnPoint = generateSpawnPoint();
 	    
 	 }
@@ -51,6 +51,12 @@ public class GamePlayer{
 	}
 	public void teleportGamePlayer() {
 		player.teleport(spawnPoint);
+	}
+	public void setCreeperCannon(boolean value) {
+		creeperCannonStatus = value;
+	}
+	public boolean getCreeperCannon() {
+		return creeperCannonStatus;
 	}
 	
 	public void addGamePlayerCooldown(PowerUpItem powerUpItem, long time) { // called by PowerUpItemManager
@@ -80,7 +86,7 @@ public class GamePlayer{
 			if (!gamePlayerCooldown.hasCooldown()) { 	// if there is no cooldown left, remove it.
 				PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
 				powerUpItem.setActive(false);
-				powerUpItem.removePowerUp(player); 
+				powerUpItem.removePowerUp(this); 
 				cooldowns.remove(gamePlayerCooldown);
 				getPlayer().getInventory().setArmorContents(playerTeam.getTeamArmor(plugin.getConfigClass().getArmorLevel())); // when a powerUp is removed, make sure armor is set back.
 				break; 	/* break to prevent looping between null values. 2 powerUps can't be collected at same time, 
@@ -95,7 +101,7 @@ public class GamePlayer{
 		for (GamePlayerCooldown gamePlayerCooldown : cooldowns) {
 			PowerUpItem powerUpItem = gamePlayerCooldown.getPowerUpItem();
 			powerUpItem.setActive(false);
-			powerUpItem.removePowerUp(player); 	
+			powerUpItem.removePowerUp(this); 	
 		}
 		cooldowns.clear();
 	}
