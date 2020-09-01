@@ -10,7 +10,8 @@ import me.devsdevelop.powerup.items.SpeedPU;
 
 
 public enum PowerUp {
-	//CANNON(Material.GREEN_STAINED_GLASS, 1),
+	// When adding powerUps, add the powerUp in the function getPowerUpItemStack in the class PowerUpManager. And add it to PowerUpItemManager
+	CANNON(Material.GREEN_STAINED_GLASS, 1),
 	HEALTH (Material.PINK_STAINED_GLASS, 2),
 	INVISIBLE(Material.LIGHT_BLUE_STAINED_GLASS, 3),
 	INVULNERABLE(Material.WHITE_STAINED_GLASS, 4),

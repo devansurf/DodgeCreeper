@@ -1,4 +1,4 @@
-#DodgeCreeper v2.0.2
+#DodgeCreeper v2.1.0
 
 #Coordinates of interior corners of the arena relative the the spawning location of the arena.
 #Values obtained by the difference of arenalocation-cornerlocation

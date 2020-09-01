@@ -88,6 +88,7 @@ public class PowerUpManager {
 			if (powerUpBlockGroup.isGenerated())
 				powerUpBlockGroup.revertBlockGroup();
 		}
+		powerUpBlocks.clear();
 		
 		ArrayList<GamePlayer> gamePlayers = plugin.getGameManager().getGamePlayers();
 		for (GamePlayer gamePlayer : gamePlayers) {
@@ -138,9 +139,9 @@ public class PowerUpManager {
 	private ItemStack getPowerUpItemStack(PowerUp powerUp) {	// reflection proved to be too complicated, for now we will resort to this.	
 		PowerUpItem item;
 			switch(powerUp) {		
-//				case CANNON:
-//					item = new CannonPU(powerUp,1);
-//					break;
+				case CANNON:
+					item = new CannonPU(powerUp,1);
+					break;
 				case HEALTH:
 					item = new HealthPU(powerUp,1);	
 					break;

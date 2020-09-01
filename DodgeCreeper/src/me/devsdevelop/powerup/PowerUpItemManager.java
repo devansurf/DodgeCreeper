@@ -2,11 +2,11 @@ package me.devsdevelop.powerup;
 
 import java.util.ArrayList;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import me.devsdevelop.DodgeCreeper;
+import me.devsdevelop.game.GamePlayer;
 import me.devsdevelop.powerup.items.CannonPU;
 import me.devsdevelop.powerup.items.HealthPU;
 import me.devsdevelop.powerup.items.InvisiblePU;
@@ -21,22 +21,21 @@ public class PowerUpItemManager {
 	
 	public PowerUpItemManager(DodgeCreeper plugin) {	
 		this.plugin = plugin;
-		//powerUpList.add (new CannonPU(PowerUp.CANNON,1));
+		powerUpList.add (new CannonPU(PowerUp.CANNON,1));
 		powerUpList.add (new HealthPU(PowerUp.HEALTH,1));
 		powerUpList.add (new InvisiblePU(PowerUp.INVISIBLE,1));
 		powerUpList.add (new InvulnerablePU(PowerUp.INVULNERABLE,1));
 		powerUpList.add (new SpeedPU(PowerUp.SPEED,1));
 	}
 	
-	public void activateItemPowerUp(ItemStack item, Player player) { // called by PlayerInteractEvent
+	public void activateItemPowerUp(ItemStack item, GamePlayer gamePlayer) { // called by PlayerInteractEvent
 		
 		ItemMeta itemMeta = item.getItemMeta();
 		for (PowerUpItem powerUpItem : powerUpList) { // search through existing powerUps
 			if (itemMeta.getCustomModelData() == powerUpItem.getPowerUp().getCustomModelId()) { // verify item in hand
-				powerUpItem.activatePowerUp(player);	// calls the function specific to the powerUp
+				powerUpItem.activatePowerUp(gamePlayer);	// calls the function specific to the powerUp
 				powerUpItem.setActive(true); // set the powerUpItems state to active
-				plugin.getGameManager().getGamePlayerFromPlayer(player).
-					addGamePlayerCooldown(powerUpItem, (long)plugin.getConfigClass().getPowerUpCooldown()); // add the powerUp Cooldown. calls GamePlayer
+				gamePlayer.addGamePlayerCooldown(powerUpItem, (long)plugin.getConfigClass().getPowerUpCooldown()); // add the powerUp Cooldown. calls GamePlayer
 				return;
 			}
 		}
