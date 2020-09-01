@@ -30,7 +30,7 @@ public class PowerUpManager {
 	private Random rand = new Random();
 	private double probability;  // should hold a value <= 1
 	private double growth;
-	private int retrys = 0;
+	private int retries = 0;
 	
 	public PowerUpManager(DodgeCreeper plugin) {
 		this.plugin = plugin;
@@ -41,16 +41,16 @@ public class PowerUpManager {
 	public void spawnPowerUp() {
 		
 		double roll = rand.nextDouble();
-		if (roll <= probability + (growth * retrys)) { // probability increases for every retry
+		if (roll <= probability + (growth * retries)) { // probability increases for every retry
 			PowerUpBlockGroup powerUpBlockGroup = new PowerUpBlockGroup(generateRandomArenaSpawn(0), getRandomPowerUp());
 			if (powerUpBlockGroup != null) {
 				powerUpBlocks.add(powerUpBlockGroup);
 				Bukkit.broadcastMessage(Utils.chat("&dA &bPower Up &dhas spawned&c!"));
 			}
-			retrys = 0;
+			retries = 0;
 		}
 		else {
-			retrys++;
+			retries++;
 		}
 		
 	}
@@ -96,7 +96,7 @@ public class PowerUpManager {
 		}
 	}
 	
-	private Location generateRandomArenaSpawn(int retrys) {
+	private Location generateRandomArenaSpawn(int retries) {
 		Location arenaLoc = plugin.getDataManager().getArenaLocation();
 		
 		int cornerX = arenaLoc.getBlockX() + plugin.getConfigClass().getRedCornerX();
@@ -109,11 +109,11 @@ public class PowerUpManager {
 		for (PowerUpBlockGroup powerUpBlockGroup : powerUpBlocks) {
 			if (powerUpBlockGroup.getLocation().getBlockX() == generatedLoc.getBlockX() 
 					&& powerUpBlockGroup.getLocation().getBlockZ() == generatedLoc.getBlockZ()) { // if location was repeated, ignore this generation.
-				if (retrys > 10) {
+				if (retries > 10) {
 					return null;
 				}
 				else {
-					return generateRandomArenaSpawn(retrys); // call function again to get a new Location.
+					return generateRandomArenaSpawn(retries); // call function again to get a new Location.
 				}
 			}
 		}

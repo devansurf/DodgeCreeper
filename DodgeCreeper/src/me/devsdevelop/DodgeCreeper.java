@@ -4,6 +4,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devsdevelop.commands.GameCommand;
+import me.devsdevelop.commands.GameTab;
 import me.devsdevelop.config.Config;
 import me.devsdevelop.data.DataManager;
 import me.devsdevelop.game.GameManager;
@@ -13,10 +14,10 @@ import me.devsdevelop.listeners.CreeperTargetListener;
 import me.devsdevelop.listeners.FoodListener;
 import me.devsdevelop.listeners.OnHitEntityListener;
 import me.devsdevelop.listeners.OnPlayerDamageListener;
+import me.devsdevelop.listeners.PlayerInteractListener;
 import me.devsdevelop.listeners.PlayerMoveListener;
 import me.devsdevelop.listeners.PlayerRegainHealthEvent;
 import me.devsdevelop.listeners.PressurePlateListener;
-import me.devsdevelop.listeners.PlayerInteractListener;
 import me.devsdevelop.powerup.PowerUpItemManager;
 import me.devsdevelop.powerup.PowerUpManager;
 import me.devsdevelop.schedulers.EggsScheduler;
@@ -72,6 +73,7 @@ public class DodgeCreeper extends JavaPlugin{
 	
 	private void EnableCommands() {
 		new GameCommand(this);
+		new GameTab(this);
 	}
 	private void EnableSchedulers() {
 		eggsScheduler = new EggsScheduler(this);
